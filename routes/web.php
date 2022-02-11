@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\frontend\EmailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::any('/test', "App\Http\Controllers\TopController@index");
+Route::any('/test2', "TopController@index");
+
+//Route::get('/hello','App\Http\Controllers\HelloController@index')
