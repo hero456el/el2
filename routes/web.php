@@ -16,13 +16,21 @@ use App\Http\Controllers\frontend\EmailController;
 */
 
 
-
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+
+Route::any('/', "App\Http\Controllers\TopController@now");
+Route::any('/list', "App\Http\Controllers\TopController@list");
+Route::any('/{date}/{hall}', "App\Http\Controllers\TopController@hall");
+Route::any('/{date}/{hall}/{floor}', "App\Http\Controllers\TopController@floor");
+Route::any('/{date}/{hall}/{floor}/{dai}', "App\Http\Controllers\TopController@dai");
+
+//現在の台情報取得
+Route::any('/dataget', "App\Http\Controllers\TopController@dataget");
+//ホールリフレッシュ
+Route::any('/hallRefresh', "App\Http\Controllers\TopController@hallRefresh");
 
 
-Route::any('/test', "App\Http\Controllers\TopController@index");
-Route::any('/test2', "TopController@index");
-
-//Route::get('/hello','App\Http\Controllers\HelloController@index')
