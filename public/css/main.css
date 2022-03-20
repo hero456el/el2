@@ -1,0 +1,43 @@
+/*maincss*/
+
+#content{
+	width: 980px;
+}
+.dai{
+	width: 12%;
+	float: right;
+	display: inline-block;
+    border: 1px solid;
+    margin: 10px 0 ;
+}
+
+.dedamaGood .dedama,
+.kakurituGood .kakuritu{
+	font-weight: bold;
+	color: blue;
+}
+
+.dedamaVeryGood .dedama,
+.kakurituVeryGood .kakuritu{
+	font-weight: bold;
+	color: blue;
+	background: yellow;
+}
+
+.kakurituVeryGood{
+    border: 2px solid blue;
+}
+
+.dedamaBad .dedama{
+	color: red;
+}
+
+.kakurituBad,
+.kakurituBad .kakuritu{
+	color: #ccc;
+}
+
+.col{
+    display: inline-block;
+    width: 980px;
+}
