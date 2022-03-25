@@ -447,9 +447,13 @@ class dai extends Authenticatable
                 else $dai = new dai();
 
                 //条件に合えば更新
+                /*
                 if((in_array($s['usr_id'], $accountIdList)) ||
                     ($dai->kakurituHyouka=='kakurituVeryGood') ||
                     ($dai->kakurituHyouka=='kakurituGood')){
+                        dai::daiOne($f, $dai);
+                }*/
+                if((in_array($s['usr_id'], $accountIdList))){
                         dai::daiOne($f, $dai);
                 }
                 //今打ってる台

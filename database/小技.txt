@@ -15,8 +15,8 @@ dPZMysHo6kcegHFYsacB2d+nZbMGvdhOqmmiJzrzE5k=
 
 ■git コミット
 git add .
-git commit
-
+git commit -m ''
+git push
 
 
 
