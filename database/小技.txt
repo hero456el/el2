@@ -1,0 +1,24 @@
+
+
+
+
+■awsパスワード
+eldra00Aws
+
+■git パスワード
+yan-at-164615551016
+dPZMysHo6kcegHFYsacB2d+nZbMGvdhOqmmiJzrzE5k=
+
+■heroseyeフォルダ
+ cd /var/www/heroseye
+
+
+■git コミット
+git add .
+git commit
+
+
+
+
+
+

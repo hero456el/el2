@@ -4,7 +4,7 @@
 
 @section('content')
 <div id="content">
-<p>ようこそ【Hero's Eye】へ!</p>
+<h1>ようこそ【Hero's Eye】へ!</h1>
 
 日付：{{$hall->date}}（本日データ）<br>
 ホール回転数：{{$hall->totalSpin}}万回転<br>
@@ -14,6 +14,25 @@ Twitter：{{$hall->twitter}}<br>
 
 <br><br><br><br>
 
+<h1>プレイ中</h1>
+<table>
+@foreach ($floor as $f)
+@if($f->myplay) @foreach ($f->myplay as $d)
+<tr class="{{$d->kakurituHyouka}} {{$d->dedamaHyouka}}">
+<td>【{{$d->EL}}】</td>
+<td>{{$f->floor}}F</td>
+<td>{{$f["kisyuName"]}}</td>
+<td>{{$d->daiban}}番台</td>
+<td>({{$f["rate"].$f["slo"]}}{{($f["kankin"]/10)."%"}})</td>
+<td>1/<span class="kakuritu">{{$d->kakuritu}}</span></td>
+<td>持ちメダル<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
+<td>{{$d->time_out}}</td>
+</tr>
+@endforeach @endif
+@endforeach
+</table><br><br><br><br>
+
+<h1>フロア一覧</h1>
 <table>
 @foreach ($floor as $f)
 <tr>
@@ -31,6 +50,8 @@ Twitter：{{$hall->twitter}}<br>
 </table><br><br><br><br>
 
 
+
+<h1>フロア詳細</h1>
 @foreach ($floor as $f)
 <table>
 <tr>

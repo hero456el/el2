@@ -411,42 +411,140 @@ class dai extends Authenticatable
 
 
 
-    // 着席データ追加  未完成。apiの返信来ず。
-    public static function sitDataInsert($floorData)
+    // 着席データ（引数はdaiList必須）
+    public static function sit($floor)
     {
-        $floor_id = ((int)date("G")>9 && (int)date("G")<22)?"100300000":"100330000";
-        $floor_id +=$floorData[0]->floor;
-        $hall = ((int)date("G")>9 && (int)date("G")<22)?"100100002":"100100003";
-        $url = "https://api.el-drado.com/machine/list";
-        $headers = [
-            'Connection'=> 'keep-alive',
-            'sec-ch-ua'=> '" Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"',
-            'DNT'=> '1',
-            'sec-ch-ua-mobile'=> '?0',
-            'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
-            'Content-Type'=> 'application/json;charset=UTF-8',
-            'Accept'=> 'application/json, text/plain, */*',
-            'ir-ticket'=> '4e33eb8cb59f1f1a74774484cb59ee51ee326004',
-            'sec-ch-ua-platform'=> '"Windows"',
-            'Origin'=> 'https://el-drado.com',
-            'Sec-Fetch-Site'=> 'same-site',
-            'Sec-Fetch-Mode'=> 'cors',
-            'Sec-Fetch-Dest'=> 'empty',
-            'Referer'=> 'https://el-drado.com',
-            'Accept-Language'=> 'ja-JP,ja;q=0.9',
-        ];
+        //現時刻のデータ
+        $ima = floor::ima();
 
-        //api
-        $response = Http::withHeaders($headers)
+        //global変数取得
+        $global = config('global');
+
+        //アカウントリスト
+        $accountIdList = account::pluck('usr_id')->toArray();
+        $accountList = account::pluck('name','usr_id')->toArray();
+
+        foreach($floor as $f){
+            //floorID
+            $floor_id = $f["floor"] + $global["toFloorId"][$ima["hall"]];
+
+            //API
+            $standby = Http::withHeaders($global["apiHead"])
+            ->post($global["url_list"], [
+                'mst_floor_id' => $floor_id,
+                'mst_hall_id' => $ima["hall_id"],
+            ]);
+            $sit = $standby['body']['machine']; //これやらないとデータ空
+
+            //返り値
+            $akiVG = [];
+            $akiG = [];
+            $dull = [];
+            $myplay = [];
+            foreach($sit as $i => $s){
+                //daiがなければ空のインスタンス
+                if(isset($f->daiList[$i])) $dai = $f->daiList[$i];
+                else $dai = new dai();
+
+                //条件に合えば更新
+                if((in_array($s['usr_id'], $accountIdList)) ||
+                    ($dai->kakurituHyouka=='kakurituVeryGood') ||
+                    ($dai->kakurituHyouka=='kakurituGood')){
+                        dai::daiOne($f, $dai);
+                }
+                //今打ってる台
+                if(in_array($s['usr_id'], $accountIdList)){
+                    $dai->EL = $accountList[$s['usr_id']]; //EL
+                    $to = $s['time_out']- time(); //タイムアウト
+                    if($to<60) $dai->time_out = $to.'秒'; //タイムアウト
+                    else $dai->time_out = round($to/60).'分'; //タイムアウト
+                    $dai->dollar_box = $s['dollar_box']; //持ちメダル
+                    $myplay[]=$dai;
+
+                //VG
+                }elseif($dai->kakurituHyouka=='kakurituVeryGood'){
+                    if($s['usr_id']) $dull[]=$dai;
+                    else $akiVG[]=$dai;
+
+                //G
+                }elseif($dai->kakurituHyouka=='kakurituGood'){
+                    if($s['usr_id']){}
+                    else $akiG[]=$dai;
+
+                }
+
+            }
+            $f->akiVG = $akiVG;
+            $f->akiG = $akiG;
+            $f->dull = $dull;
+            $f->myplay = $myplay;
+
+        }
+        return true;
+
+    }
+
+
+
+
+
+    // 一台更新
+    public static function daiOne($f,$dai)
+    {
+        $ima = floor::ima();
+        $global = config('global');
+        $daiban = $dai->daiban;
+        $addMachineId = (($f["floor"]-1)*40) + $global["toMachineId"][$ima["hall"]];
+        $floor_id = $f["floor"] + $global["toFloorId"][$ima["hall"]];
+        $kisyu = kisyu::find($f["kisyu"],["type","tenjyo","renZone","name","kakurituVeryGood","kakurituGood"])->toArray();
+        $url = $global["daiApiUrl"][$kisyu["type"]];
+
+        //API
+        $machine_id = $daiban + $addMachineId;
+        $response = Http::withHeaders($global["apiHead"])
         ->post($url, [
             'mst_floor_id' => $floor_id,
-            'mst_hall_id' => $hall,
+            'mst_hall_id' => $ima["hall_id"],
+            'mst_machine_id' => $machine_id,
         ]);
+        if(!isset($response['body'][$global["detail"][$kisyu["type"]]])) return false; //apiの戻りが空ならエラー
+        $res = $response['body'][$global["detail"][$kisyu["type"]]][0]; //これやらないとデータ空
 
-        return $response;
+        //dai書き換え
+        if(!$dai->hall) $dai->hall = $ima["hall"];
+        if(!$dai->floor) $dai->floor = $f["floor"];
+        if(!$dai->daiban) $dai->daiban = $daiban;
+        if(!$dai->date) $dai->date = $ima["date"];
 
-        return true;
+        //db書き換え
+        $newDai = dai::where('hall', $ima["hall"])
+            ->where('floor', $f["floor"])
+            ->where('daiban', $daiban)
+            ->where('date', $ima["date"])
+            ->first();
+        //DBに無ければインスタンス作成
+        if(!$newDai){
+            $newDai = new dai();
+            $newDai->hall = $ima["hall"];
+            $newDai->floor = $f["floor"];
+            $newDai->daiban = $daiban;
+            $newDai->date = $ima["date"];
+        }
+
+        //APIのデータ格納
+        if($res["total_spin_count"] > $dai->totalSpin){
+            dai::resToModel($dai, $res, $kisyu, $f);
+            dai::resToModel($newDai, $res, $kisyu, $f);
+            $newDai->save();
+        }
     }
+
+
+
+
+
+
+
 
 
 

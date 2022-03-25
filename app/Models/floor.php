@@ -140,6 +140,7 @@ class floor extends Authenticatable
 
             //割計算
             $oneKW = $kisyu["oneK"];
+            if($oneKW==0) $oneKW=30;
             $totalSpinW = $f->totalSpin;
             $rateW = $f->rate;
             $dedamaW = $f->dedama;

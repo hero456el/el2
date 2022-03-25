@@ -23,6 +23,7 @@ $headers = [
 $daiApiUrlSlo = "https://api.el-drado.com/machine/detailSlot";
 $daiApiUrlPachi = "https://api.el-drado.com/machine/detailPachinko";
 $hallApiUrl_addHallId = "https://api.el-drado.com/floor/info/";
+$url_list = "https://api.el-drado.com/machine/list";
 
 $daiApiUrl = [];
 $daiApiUrl[1] = $daiApiUrlSlo;
@@ -51,6 +52,7 @@ return [
     'url_P' => $daiApiUrlPachi,
     'url_hall' => $hallApiUrl_addHallId,
     'daiApiUrl' => $daiApiUrl,
+    'url_list' => $url_list,
     'detail' => $detail,
 
 ];
