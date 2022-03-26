@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\dai;
 use App\Models\floor;
+use App\Models\account;
 
 
 class kisyu extends Authenticatable
@@ -39,6 +40,32 @@ class kisyu extends Authenticatable
         return $kisyuID;
 
     }
+
+    //データベースにインサート
+    public static function dbInsert($tuika=null){
+        $jyu = kisyu::all()->find(10);
+        $jyu->tenjyo = 999;
+        $jyu->oneK = 35;
+        $jyu->kakurituVeryGood = 120;
+        $jyu->kakurituGood = 130;
+        $jyu->kakurituBad = 140;
+        $jyu->save();
+
+        if(!account::where(['usr_id'=>'4609'])->exists()) account::create(['usr_id'=>'4609','name'=>'EL31']);
+        if(!account::where(['usr_id'=>'4469'])->exists()) account::create(['usr_id'=>'4469','name'=>'EL19']);
+        if(!account::where(['usr_id'=>'4476'])->exists()) account::create(['usr_id'=>'4476','name'=>'EL21']);
+        if(!account::where(['usr_id'=>'4670'])->exists()) account::create(['usr_id'=>'4670','name'=>'EL46']);
+        if(!account::where(['usr_id'=>'3694'])->exists()) account::create(['usr_id'=>'3694','name'=>'EL11']);
+        if(!account::where(['usr_id'=>'4614'])->exists()) account::create(['usr_id'=>'4614','name'=>'EL35']);
+        if(!account::where(['usr_id'=>'4618'])->exists()) account::create(['usr_id'=>'4618','name'=>'EL39']);
+        if(!account::where(['usr_id'=>'4620'])->exists()) account::create(['usr_id'=>'4620','name'=>'EL41']);
+        //        if(!account::where(['usr_id'=>''])->exists()) account::create(['usr_id'=>'','name'=>'EL']);
+//        return view ('test', ['test1' => $jyu, 'test2' => "sss"]);
+
+        return true;
+
+    }
+
 
 
 

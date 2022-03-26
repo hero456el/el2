@@ -25,7 +25,42 @@ Twitter：{{$hall->twitter}}<br>
 <td>{{$d->daiban}}番台</td>
 <td>({{$f["rate"].$f["slo"]}}{{($f["kankin"]/10)."%"}})</td>
 <td>1/<span class="kakuritu">{{$d->kakuritu}}</span></td>
-<td>持ちメダル<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
+<td>持メ<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
+<td>{{$d->time_out}}</td>
+</tr>
+@endforeach @endif
+@endforeach
+</table><br><br><br><br>
+
+<h1>VeryGood空き情報</h1>
+<table>
+@foreach ($floor as $f)
+@if($f->akiVG) @foreach ($f->akiVG as $d)
+<tr class="{{$d->kakurituHyouka}} {{$d->dedamaHyouka}}">
+<td>{{$f->floor}}F</td>
+<td>{{$f["kisyuName"]}}</td>
+<td>{{$d->daiban}}番台</td>
+<td>({{$f["rate"].$f["slo"]}}{{($f["kankin"]/10)."%"}})</td>
+<td>1/<span class="kakuritu">{{$d->kakuritu}}</span></td>
+<td>({{$d->hatu}}/{{$d->tujyo}})</td>
+<td>出玉 <span class="dedama">{{$d->dedama}}{{$f["mai"]}}</span></td>
+</tr>
+@endforeach @endif
+@endforeach
+</table><br><br><br><br>
+
+<h1>ドゥル</h1>
+<table>
+@foreach ($floor as $f)
+@if($f->dull) @foreach ($f->dull as $d)
+<tr class="{{$d->kakurituHyouka}} {{$d->dedamaHyouka}}">
+<td>{{$f->floor}}F</td>
+<td>{{$f["kisyuName"]}}</td>
+<td>{{$d->daiban}}番台</td>
+<td>({{$f["rate"].$f["slo"]}}{{($f["kankin"]/10)."%"}})</td>
+<td>1/<span class="kakuritu">{{$d->kakuritu}}</span></td>
+<td>({{$d->hatu}}/{{$d->tujyo}})</td>
+<td>持メ<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
 <td>{{$d->time_out}}</td>
 </tr>
 @endforeach @endif

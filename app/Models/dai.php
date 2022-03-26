@@ -446,15 +446,12 @@ class dai extends Authenticatable
                 if(isset($f->daiList[$i])) $dai = $f->daiList[$i];
                 else $dai = new dai();
 
-                //条件に合えば更新
-                /*
+                //myplayとvgを更新
                 if((in_array($s['usr_id'], $accountIdList)) ||
-                    ($dai->kakurituHyouka=='kakurituVeryGood') ||
-                    ($dai->kakurituHyouka=='kakurituGood')){
+                    ($dai->kakurituHyouka=='kakurituVeryGood')){
                         dai::daiOne($f, $dai);
-                }*/
-                if((in_array($s['usr_id'], $accountIdList))){
-                        dai::daiOne($f, $dai);
+                        if($dai->hatu) $dai->kakuritu = round($dai->tujyo / $dai->hatu);
+                        else $dai->kakuritu = "-";
                 }
                 //今打ってる台
                 if(in_array($s['usr_id'], $accountIdList)){
@@ -467,13 +464,18 @@ class dai extends Authenticatable
 
                 //VG
                 }elseif($dai->kakurituHyouka=='kakurituVeryGood'){
+                    $to = $s['time_out']- time(); //タイムアウト
+                    if($to<60) $dai->time_out = $to.'秒'; //タイムアウト
+                    else $dai->time_out = round($to/60).'分'; //タイムアウト
+                    $dai->dollar_box = $s['dollar_box']; //持ちメダル
+
                     if($s['usr_id']) $dull[]=$dai;
                     else $akiVG[]=$dai;
 
-                //G
+                /*//G
                 }elseif($dai->kakurituHyouka=='kakurituGood'){
                     if($s['usr_id']){}
-                    else $akiG[]=$dai;
+                    else $akiG[]=$dai;*/
 
                 }
 

@@ -34,20 +34,8 @@ class TopController extends Controller
 
     //■Top画面
     public function now(){
-        $jyu = kisyu::all()->find(10);
-        $jyu->tenjyo = 999;
-        $jyu->oneK = 35;
-        $jyu->kakurituVeryGood = 100;
-        $jyu->kakurituGood = 115;
-        $jyu->kakurituBad = 130;
-        $jyu->save();
-
-        if(!account::where(['usr_id'=>'4609'])->exists()) account::create(['usr_id'=>'4609','name'=>'EL31']);
-        if(!account::where(['usr_id'=>'4469'])->exists()) account::create(['usr_id'=>'4469','name'=>'EL19']);
-        if(!account::where(['usr_id'=>'4476'])->exists()) account::create(['usr_id'=>'4476','name'=>'EL21']);
-        if(!account::where(['usr_id'=>'4670'])->exists()) account::create(['usr_id'=>'4670','name'=>'EL46']);
-//        if(!account::where(['usr_id'=>''])->exists()) account::create(['usr_id'=>'','name'=>'EL']);
-//        return view ('test', ['test1' => $jyu, 'test2' => "sss"]);
+        // データベースの情報更新
+        kisyu::dbInsert();
 
         // フロアデータ取得
         $floor = floor::floorData();
