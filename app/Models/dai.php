@@ -447,8 +447,14 @@ class dai extends Authenticatable
                 else $dai = new dai();
 
                 //myplayとvgを更新
+                /*
                 if((in_array($s['usr_id'], $accountIdList)) ||
                     ($dai->kakurituHyouka=='kakurituVeryGood')){
+                        dai::daiOne($f, $dai);
+                        if($dai->hatu) $dai->kakuritu = round($dai->tujyo / $dai->hatu);
+                        else $dai->kakuritu = "-";
+                }*/
+                if((in_array($s['usr_id'], $accountIdList))){
                         dai::daiOne($f, $dai);
                         if($dai->hatu) $dai->kakuritu = round($dai->tujyo / $dai->hatu);
                         else $dai->kakuritu = "-";

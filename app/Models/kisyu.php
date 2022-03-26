@@ -59,7 +59,14 @@ class kisyu extends Authenticatable
         if(!account::where(['usr_id'=>'4614'])->exists()) account::create(['usr_id'=>'4614','name'=>'EL35']);
         if(!account::where(['usr_id'=>'4618'])->exists()) account::create(['usr_id'=>'4618','name'=>'EL39']);
         if(!account::where(['usr_id'=>'4620'])->exists()) account::create(['usr_id'=>'4620','name'=>'EL41']);
-        //        if(!account::where(['usr_id'=>''])->exists()) account::create(['usr_id'=>'','name'=>'EL']);
+        if(!account::where(['usr_id'=>'4619'])->exists()) account::create(['usr_id'=>'4619','name'=>'EL40']);
+        if(!account::where(['usr_id'=>'4601'])->exists()) account::create(['usr_id'=>'4601','name'=>'EL24']);
+        if(!account::where(['usr_id'=>'4599'])->exists()) account::create(['usr_id'=>'4599','name'=>'EL22']);
+        if(!account::where(['usr_id'=>'4605'])->exists()) account::create(['usr_id'=>'4605','name'=>'EL28']);
+        if(!account::where(['usr_id'=>'3678'])->exists()) account::create(['usr_id'=>'3678','name'=>'EL14']);
+        if(!account::where(['usr_id'=>'4612'])->exists()) account::create(['usr_id'=>'4612','name'=>'EL33']);
+
+//        if(!account::where(['usr_id'=>''])->exists()) account::create(['usr_id'=>'','name'=>'EL']);
 //        return view ('test', ['test1' => $jyu, 'test2' => "sss"]);
 
         return true;
