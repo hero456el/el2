@@ -51,6 +51,12 @@ class kisyu extends Authenticatable
         $jyu->kakurituBad = 140;
         $jyu->save();
 
+        $an = kisyu::all()->find(6);
+        $an->kakurituVeryGood = 250;
+        $an->kakurituGood = 265;
+        $an->kakurituBad = 280;
+        $an->save();
+
         if(!account::where(['usr_id'=>'3694'])->exists()) account::create(['usr_id'=>'3694','name'=>'EL11']);
         if(!account::where(['usr_id'=>'3678'])->exists()) account::create(['usr_id'=>'3678','name'=>'EL14']);
         if(!account::where(['usr_id'=>'4469'])->exists()) account::create(['usr_id'=>'4469','name'=>'EL19']);

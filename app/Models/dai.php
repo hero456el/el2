@@ -358,6 +358,13 @@ class dai extends Authenticatable
             $dai->tujyo = $tujyo;
 
 
+        //■エンジェルローズ ----------------------
+        }elseif($kisyu["name"]=="AngelRoses"){
+            foreach($history as $b){
+                $tujyo += $b["spin"];
+                if($b["spin"]<$tenjyo && $b["type"]==1) $hatu++;
+            }
+
         //■一般的な台 ----------------------
         }else{
             foreach($history as $b){
