@@ -18,11 +18,26 @@ use App\Models\account;
 
 class TopController extends Controller
 {
+    //■API
+    public function apidataget(Request $request){
+        $floor = $request->get('f');
+        $line = $request->get('l');
+        dai::daiGetAPI($floor, $line);
+//        if($line) floor::vgCount();
+        return true;
+    }
+    public function apiMatome(Request $request){
+        return true;
+    }
+
+
+
+
     //APIたたく
     public function dataget(Request $request){
         $floor = $request->get('f');
         $time = dai::daiGetAPI($floor);
-//        return view ('test', ['test1' => $time, 'test2' => "sss"]);
+        //        return view ('test', ['test1' => $time, 'test2' => "sss"]);
         return back();
     }
 

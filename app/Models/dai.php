@@ -23,7 +23,7 @@ class dai extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     // APIから台データ取得
-    public static function daiGetAPI($oneFloor = null)
+    public static function daiGetAPI($oneFloor = null, $line=null)
     {
         set_time_limit(8000);
         $start = time(); //時間計測
@@ -126,7 +126,16 @@ class dai extends Authenticatable
             $Vgood2 = 0;
             $good_line = $kisyu["kakurituGood"];
             $Vgood_line = $kisyu["kakurituVeryGood"];
-            for($daiban=1; $daiban<=40; $daiban++){
+            //一列ごと
+            $s=1;$e=40;
+            if($line){
+                if($line==1){$s=1;$e=8;}
+                if($line==2){$s=9;$e=16;}
+                if($line==3){$s=17;$e=24;}
+                if($line==4){$s=25;$e=32;}
+                if($line==5){$s=33;$e=40;}
+            }
+            for($daiban=$s; $daiban<=$e; $daiban++){
                 //API
                 $machine_id = $daiban + $addMachineId;
                 $response = Http::withHeaders($global["apiHead"])
@@ -246,30 +255,32 @@ class dai extends Authenticatable
                 }
             } //台回し終わり
 
-            //フロア更新時間タッチ
-            $now = date("Y-m-d H:i:s", time());
-            $f->lastUpdate = $now;
-            $f->totalSpin = $spinSum;
-            $f->dedama = $dedamaSum;
-            $f->syushi = $syushiSum;
-            $f->veryGood = $Vgood;
-            $f->good = $good;
-            $f->save();
-//            if($index==3) return $f;
-            if(!$notYesterday){
-                $floor1[$index]->totalSpin = $spinSum1;
-                $floor1[$index]->dedama = $dedamaSum1;
-                $floor1[$index]->syushi = $syushiSum1;
-                $floor1[$index]->veryGood = $Vgood1;
-                $floor1[$index]->good = $good1;
-                $floor1[$index]->save();
-                if(!$notYesterday2){
-                    $floor2[$index]->totalSpin = $spinSum2;
-                    $floor2[$index]->dedama = $dedamaSum2;
-                    $floor2[$index]->syushi = $syushiSum2;
-                    $floor2[$index]->veryGood = $Vgood2;
-                    $floor2[$index]->good = $good2;
-                    $floor2[$index]->save();
+            if(!$line){
+                //フロア更新時間タッチ
+                $now = date("Y-m-d H:i:s", time());
+                $f->lastUpdate = $now;
+                $f->totalSpin = $spinSum;
+                $f->dedama = $dedamaSum;
+                $f->syushi = $syushiSum;
+                $f->veryGood = $Vgood;
+                $f->good = $good;
+                $f->save();
+    //            if($index==3) return $f;
+                if(!$notYesterday){
+                    $floor1[$index]->totalSpin = $spinSum1;
+                    $floor1[$index]->dedama = $dedamaSum1;
+                    $floor1[$index]->syushi = $syushiSum1;
+                    $floor1[$index]->veryGood = $Vgood1;
+                    $floor1[$index]->good = $good1;
+                    $floor1[$index]->save();
+                    if(!$notYesterday2){
+                        $floor2[$index]->totalSpin = $spinSum2;
+                        $floor2[$index]->dedama = $dedamaSum2;
+                        $floor2[$index]->syushi = $syushiSum2;
+                        $floor2[$index]->veryGood = $Vgood2;
+                        $floor2[$index]->good = $good2;
+                        $floor2[$index]->save();
+                    }
                 }
             }
         } //フロア回し終わり

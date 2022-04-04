@@ -169,7 +169,55 @@ class floor extends Authenticatable
         if($floorList->isEmpty()) return false;
         else return $floorList;
     }
+/*
+    //veryGoodをカウントし直し
+    public static function vgCount(){
+        $ima = floor::ima(); //現時刻データ
 
+        //floor一覧
+        $floor = floor::where('hall', $ima["hall"])
+        ->where('date', $ima["date"])
+        ->orderBy('floor', 'asc')
+        ->get();
+
+        foreach($floor as $f){
+            //台一覧
+            $daiList = dai::daiList($f)
+            foreach($daiList as $d){
+
+            }
+
+
+        }
+
+        //フロア更新時間タッチ
+        $now = date("Y-m-d H:i:s", time());
+        $f->lastUpdate = $now;
+        $f->totalSpin = $spinSum;
+        $f->dedama = $dedamaSum;
+        $f->syushi = $syushiSum;
+        $f->veryGood = $Vgood;
+        $f->good = $good;
+        $f->save();
+        //            if($index==3) return $f;
+        if(!$notYesterday){
+            $floor1[$index]->totalSpin = $spinSum1;
+            $floor1[$index]->dedama = $dedamaSum1;
+            $floor1[$index]->syushi = $syushiSum1;
+            $floor1[$index]->veryGood = $Vgood1;
+            $floor1[$index]->good = $good1;
+            $floor1[$index]->save();
+            if(!$notYesterday2){
+                $floor2[$index]->totalSpin = $spinSum2;
+                $floor2[$index]->dedama = $dedamaSum2;
+                $floor2[$index]->syushi = $syushiSum2;
+                $floor2[$index]->veryGood = $Vgood2;
+                $floor2[$index]->good = $good2;
+                $floor2[$index]->save();
+            }
+        }
+    }
+*/
 }
 
 /*

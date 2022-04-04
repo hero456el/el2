@@ -14,10 +14,12 @@ Twitter：{{$hall->twitter}}<br>
 
 <br><br><br><br>
 
-<h1>プレイ中</h1>
+<h1>ぽんちゃんプレイ中</h1>
+<?php $totalKati=0;?>
 <table>
 @foreach ($floor as $f)
 @if($f->myplay) @foreach ($f->myplay as $d)
+@if($d->EL=="EL50"||$d->EL=="EL51"||$d->EL=="EL52"||$d->EL=="EL53"||$d->EL=="EL54")
 <tr class="{{$d->kakurituHyouka}} {{$d->dedamaHyouka}}">
 <td>【{{$d->EL}}】</td>
 <td>{{$f->floor}}F</td>
@@ -25,12 +27,50 @@ Twitter：{{$hall->twitter}}<br>
 <td>{{$d->daiban}}番台</td>
 <td>({{$f["rate"].$f["slo"]}}{{($f["kankin"]/10)."%"}})</td>
 <td>1/<span class="kakuritu">{{$d->kakuritu}}</span></td>
-<td>持メ<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
-<td>{{$d->time_out}}</td>
+<td class="r">　<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
+<?php $kati=$d->dollar_box*$f["rate"]*($f["kankin"]/1000); $totalKati+=$kati; ?>
+<td class="r"> {{number_format($kati)}}円</td>
+<?php $to=""; if($d->time_out!="30分"){$to="not30";} ?>
+<td class="{{$to}}">{{$d->time_out}}</td>
 </tr>
+@endif
 @endforeach @endif
 @endforeach
-</table><br><br><br><br>
+</table>
+<p class="kankin">　<span>{{number_format($totalKati)}}</span> 円換金！</p>
+<br><br>
+
+<h1>俺プレイ中</h1>
+<?php $totalKati=0;?>
+<table>
+@foreach ($floor as $f)
+@if($f->myplay) @foreach ($f->myplay as $d)
+@if($d->EL=="EL50"||$d->EL=="EL51"||$d->EL=="EL52"||$d->EL=="EL53"||$d->EL=="EL54")
+@else
+<tr class="{{$d->kakurituHyouka}} {{$d->dedamaHyouka}}">
+<td>【{{$d->EL}}】</td>
+<td>{{$f->floor}}F</td>
+<td>{{$f["kisyuName"]}}</td>
+<td>{{$d->daiban}}番台</td>
+<td>({{$f["rate"].$f["slo"]}}{{($f["kankin"]/10)."%"}})</td>
+<td>1/<span class="kakuritu">{{$d->kakuritu}}</span></td>
+<td class="r">　<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
+<?php $kati=$d->dollar_box*$f["rate"]*($f["kankin"]/1000); $totalKati+=$kati; ?>
+<td class="r"> {{number_format($kati)}}円</td>
+<?php $to=""; if($d->time_out!="30分"){$to="not30";} ?>
+<td class="{{$to}}">{{$d->time_out}}</td>
+</tr>
+@endif
+@endforeach @endif
+@endforeach
+</table>
+<p class="kankin">　<span>{{number_format($totalKati)}}</span> 円換金！</p>
+<br><br>
+
+
+
+
+
 
 <h1>VeryGood空き情報</h1>
 <table>

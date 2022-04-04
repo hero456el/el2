@@ -18,7 +18,9 @@ git add .
 git commit -m ''
 git push
 
-
-
-
-
+■git pull
+cd /var/www/heroseye
+git pull
+yan-at-164615551016
+dPZMysHo6kcegHFYsacB2d+nZbMGvdhOqmmiJzrzE5k=
+php artisan migrate

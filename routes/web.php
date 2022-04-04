@@ -33,4 +33,6 @@ Route::any('/dataget', "App\Http\Controllers\TopController@dataget");
 //ホールリフレッシュ
 Route::any('/hallRefresh', "App\Http\Controllers\TopController@hallRefresh");
 
-
+//api
+Route::any('/apidataget', "App\Http\Controllers\TopController@apidataget");
+Route::any('/apiMatome', "App\Http\Controllers\TopController@apiMatome");

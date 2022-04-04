@@ -41,3 +41,25 @@
     display: inline-block;
     width: 980px;
 }
+
+.not30{
+	font-weight: bold;
+	color: red;
+	font-size: 1.5em;
+}
+
+.r{
+	text-align: right;
+}
+
+.kankin{
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.kankin span{
+	font-size: 1.4em;
+	color: blue;
+}
+
+
+
