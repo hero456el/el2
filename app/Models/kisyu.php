@@ -46,9 +46,9 @@ class kisyu extends Authenticatable
         $jyu = kisyu::all()->find(10);
         $jyu->tenjyo = 999;
         $jyu->oneK = 35;
-        $jyu->kakurituVeryGood = 120;
-        $jyu->kakurituGood = 130;
-        $jyu->kakurituBad = 140;
+        $jyu->kakurituVeryGood = 100;
+        $jyu->kakurituGood = 120;
+        $jyu->kakurituBad = 160;
         $jyu->save();
 
         $an = kisyu::all()->find(6);

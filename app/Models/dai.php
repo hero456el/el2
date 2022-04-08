@@ -365,7 +365,29 @@ class dai extends Authenticatable
                 if($b["spin"]<$tenjyo && $b["type"]==1) $hatu++;
             }
 
-        //■一般的な台 ----------------------
+        //■ハニー ----------------------
+        }elseif($kisyu["name"]=="Honey♡Collection"){
+            $spin = $res["spin_count"];
+            $tujyo = 0;
+            if($spin>38) $tujyo += 3.4;
+            if($spin>82) $tujyo += 3.1;
+            if($spin>116) $tujyo += 11;
+            if($spin>227) $tujyo += 22.9;
+            foreach($history as $b){
+                if($b["spin"]>38) $tujyo += 3.4;
+                if($b["spin"]>82) $tujyo += 3.1;
+                if($b["spin"]>116) $tujyo += 11;
+                if($b["spin"]>227) $tujyo += 22.9;
+                if($b["type"]==1){
+                    if($b["spin"]>=33 && $b["spin"]<=38) $hatu++;
+                    if($b["spin"]>=77 && $b["spin"]<=82) $hatu++;
+                    if($b["spin"]>=111 && $b["spin"]<=116) $hatu++;
+                    if($b["spin"]>=222 && $b["spin"]<=227) $hatu++;
+                }
+            }
+            $tujyo = round($tujyo);
+
+            //■一般的な台 ----------------------
         }else{
             foreach($history as $b){
                 if($hatu == 0){
