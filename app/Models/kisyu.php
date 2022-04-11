@@ -13,6 +13,9 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\dai;
 use App\Models\floor;
 use App\Models\account;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class kisyu extends Authenticatable
@@ -91,12 +94,21 @@ class kisyu extends Authenticatable
         $id="4616"; $name="EL37"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="4615"; $name="EL36"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="4667"; $name="EL43"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
-        $id="4618"; $name="EL44"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="4668"; $name="EL44"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="4673"; $name="EL49"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="3676"; $name="EL16"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="4600"; $name="EL23"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="4602"; $name="EL25"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="4607"; $name="EL29"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+
+        if(!User::where(['id'=>'1'])->exists()){
+            DB::table('users')->insert([
+                'id' => 1,
+                'name' => "pon",
+                'email' => "hero@hero.hero",
+                'password' => Hash::make('hero'),
+            ]);
+        }
 
         return true;
 
