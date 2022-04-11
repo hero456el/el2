@@ -22,8 +22,8 @@ Route::get('/', function () {
 });
 */
 
-Route::any('/', "App\Http\Controllers\TopController@now");
-//Route::middleware(['auth:sanctum', 'verified'])->any('/', "App\Http\Controllers\TopController@now");
+//Route::any('/', "App\Http\Controllers\TopController@now");
+Route::middleware(['auth:sanctum', 'verified'])->any('/', "App\Http\Controllers\TopController@now");
 Route::middleware(['auth:sanctum', 'verified'])->any('/list', "App\Http\Controllers\TopController@list");
 Route::middleware(['auth:sanctum', 'verified'])->any('/{date}/{hall}', "App\Http\Controllers\TopController@hall");
 Route::middleware(['auth:sanctum', 'verified'])->any('/{date}/{hall}/{floor}', "App\Http\Controllers\TopController@floor");
@@ -45,7 +45,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-/*
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -53,7 +53,7 @@ Route::middleware([
 ])->group(function () {
     Route::any('/', "App\Http\Controllers\TopController@now");
 });
-*/
+
 
 
 
