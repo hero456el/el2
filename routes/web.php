@@ -45,7 +45,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-
+/*
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -53,7 +53,7 @@ Route::middleware([
 ])->group(function () {
     Route::any('/', "App\Http\Controllers\TopController@now");
 });
-
+*/
 
 
 
