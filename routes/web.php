@@ -22,7 +22,8 @@ Route::get('/', function () {
 });
 */
 
-Route::middleware(['auth:sanctum', 'verified'])->any('/', "App\Http\Controllers\TopController@now");
+Route::any('/', "App\Http\Controllers\TopController@now");
+//Route::middleware(['auth:sanctum', 'verified'])->any('/', "App\Http\Controllers\TopController@now");
 Route::middleware(['auth:sanctum', 'verified'])->any('/list', "App\Http\Controllers\TopController@list");
 Route::middleware(['auth:sanctum', 'verified'])->any('/{date}/{hall}', "App\Http\Controllers\TopController@hall");
 Route::middleware(['auth:sanctum', 'verified'])->any('/{date}/{hall}/{floor}', "App\Http\Controllers\TopController@floor");
