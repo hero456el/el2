@@ -9,7 +9,8 @@ $headers = [
     'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
     'Content-Type'=> 'application/json;charset=UTF-8',
     'Accept'=> 'application/json, text/plain, */*',
-    'ir-ticket'=> '4e33eb8cb59f1f1a74774484cb59ee51ee326004',
+//    'ir-ticket'=> '4e33eb8cb59f1f1a74774484cb59ee51ee326004',
+    'ir-ticket'=> '04e989100975bef3358585d2554af247c19d9ebe',
     'sec-ch-ua-platform'=> '"Windows"',
     'Origin'=> 'https://el-drado.com',
     'Sec-Fetch-Site'=> 'same-site',
@@ -24,6 +25,7 @@ $daiApiUrlSlo = "https://api.el-drado.com/machine/detailSlot";
 $daiApiUrlPachi = "https://api.el-drado.com/machine/detailPachinko";
 $hallApiUrl_addHallId = "https://api.el-drado.com/floor/info/";
 $url_list = "https://api.el-drado.com/machine/list";
+$sitdownUrl = "https://api.el-drado.com/seat/sitdown";
 
 $daiApiUrl = [];
 $daiApiUrl[1] = $daiApiUrlSlo;
@@ -52,6 +54,7 @@ return [
     'url_P' => $daiApiUrlPachi,
     'url_hall' => $hallApiUrl_addHallId,
     'daiApiUrl' => $daiApiUrl,
+    'sitdownUrl' => $sitdownUrl,
     'url_list' => $url_list,
     'detail' => $detail,
 

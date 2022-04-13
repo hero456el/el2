@@ -538,8 +538,6 @@ class dai extends Authenticatable
 
 
 
-
-
     // 一台更新
     public static function daiOne($f,$dai)
     {
@@ -592,7 +590,109 @@ class dai extends Authenticatable
     }
 
 
+    // sitdown
+    public static function sitdown()
+    {
+        $ima = floor::ima();
+        $global = config('global');
+        $url = $global["sitdownUrl"];
+        $floor_id = 11 + $global["toFloorId"][$ima["hall"]];
+        $machine_id = '100500423';
+/*
+        $url = 'https://api.el-drado.com/hall/enterhall';
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url, [
+            'mst_floor_id' => $floor_id,
+            'mst_hall_id' => $ima["hall_id"],
+            'mst_machine_id' => $machine_id,
+        ]);
+        $res = $response['body']; //これやらないとデータ空
 
+        $url = $global["sitdownUrl"];
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url, [
+            'mst_floor_id' => $floor_id,
+            'mst_hall_id' => $ima["hall_id"],
+            'mst_machine_id' => $machine_id,
+        ]);
+        $res = $response['body']; //これやらないとデータ空
+*/
+        // 台辞める
+        $url = 'https://api.el-drado.com/balance/payoff';
+        // プロフィール
+        $url = 'https://api.el-drado.com/profile/mefloor';
+        // ログアウト
+        $url = 'https://api.el-drado.com/login/logout';
+        // ログイン
+        $url = 'https://api.el-drado.com/login';
+
+        $response2 = Http::withHeaders($global["apiHead"])
+        ->post($url, [
+            'code' => '',
+            'is_mode_id_passwd' => 'True',
+            'lock_tid' => '3541e5f1-a7f8-4a65-b991-e1c6486f9481',
+            'login_id' => 'mituru.hamaoka@gmail.com',
+            'password' => 'panda-el2',
+            'uuid' => '932ea948-bb0e-11ec-bac2-5254001d8a87',
+        ]);
+
+        $url = 'https://api.el-drado.com/';
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'log', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'auth/chekip', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'hall/getHallIdList', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'app/getenv', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'header/badge', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'hall/hallBgmList', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'profile/me', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'auth/loginstatus', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'machine/enableButton', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'town/curtain', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'profile/seat', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'profile/me', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'profile/firstLoginCheck', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'hall', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'hall/closedInfo', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'information/new', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'visitpoint', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'profile/seat', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'log', []);
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'header/badge', []);
+
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url.'profile/me', []);
+
+        /*
+        $url = $global["url_list"];
+        $response = Http::withHeaders($global["apiHead"])
+        ->post($url, [
+            'mst_floor_id' => $floor_id,
+            'mst_hall_id' => $ima["hall_id"],
+//            'mst_machine_id' => $machine_id,
+        ]);
+*/
+
+        return $response2;
+    }
 
 
 

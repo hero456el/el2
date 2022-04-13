@@ -30,9 +30,6 @@ class TopController extends Controller
         return true;
     }
 
-
-
-
     //APIたたく
     public function dataget(Request $request){
         $floor = $request->get('f');
@@ -45,6 +42,12 @@ class TopController extends Controller
     public function hallRefresh(){
         $t = hall::hallRefresh();
         return back();
+    }
+
+    //sit
+    public function sit(){
+        $test = dai::sitdown();
+        return view ('sit', ['test' => $test, 'test2' => "sss"]);
     }
 
     //■Top画面

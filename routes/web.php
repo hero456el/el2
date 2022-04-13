@@ -30,6 +30,8 @@ Route::middleware(['auth:sanctum', 'verified'])->any('/{date}/{hall}/{floor}', "
 Route::middleware(['auth:sanctum', 'verified'])->any('/{date}/{hall}/{floor}/{dai}', "App\Http\Controllers\TopController@dai");
 //Route::middleware(['auth:sanctum', 'verified'])->any('/project', "ProjectController@projectList");
 
+Route::middleware(['auth:sanctum', 'verified'])->any('/sit', "App\Http\Controllers\TopController@sit");
+
 //現在の台情報取得
 Route::any('/dataget', "App\Http\Controllers\TopController@dataget");
 //ホールリフレッシュ
