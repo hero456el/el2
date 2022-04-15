@@ -1,7 +1,4 @@
 var floorCount=0;
-var apiUrl = "";
-apiUrl = "http://ec2-54-84-54-214.compute-1.amazonaws.com";
-apiUrl = "http://localhost/heroseye/public";
 
 //Firefoxかどうか
 var firefox = 0;
@@ -12,7 +9,9 @@ var topPage = 0;
 var uri = new URL(window.location.href);
 if(uri.pathname == '/heroseye/public/'){topPage = 1;}
 
-
+//localhostかどうか
+var apiUrl = "http://ec2-54-84-54-214.compute-1.amazonaws.com";
+if ( uri.href.match(/localhostt/)) {apiUrl = "http://localhost/heroseye/public";}
 
 //ボタンを押したタイミングで発火する
 $("#aj").click(function () {
