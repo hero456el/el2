@@ -26,6 +26,11 @@ class TopController extends Controller
 //        if($line) floor::vgCount();
         return true;
     }
+
+    public function apiPlayNow(){
+        return true;
+    }
+
     public function apiMatome(Request $request){
         return true;
     }
@@ -68,12 +73,13 @@ class TopController extends Controller
         }
 
         //着席情報
-        $sit = dai::sit($floor);
+        $pinch = dai::sit($floor);
 //        return view ('test', ['test1' => $sit, 'test2' => "sss"]);
 
         return view('top', [
             'floor' => $floor,
             'hall' => $hall,
+            'pinch' => $pinch,
         ]);
     }
 

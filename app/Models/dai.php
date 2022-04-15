@@ -464,6 +464,9 @@ class dai extends Authenticatable
         $accountIdList = account::pluck('usr_id')->toArray();
         $accountList = account::pluck('name','usr_id')->toArray();
 
+        //返り値
+        $pinch = "";
+
         foreach($floor as $f){
             //floorID
             $floor_id = $f["floor"] + $global["toFloorId"][$ima["hall"]];
@@ -503,6 +506,7 @@ class dai extends Authenticatable
                 if(in_array($s['usr_id'], $accountIdList)){
                     $dai->EL = $accountList[$s['usr_id']]; //EL
                     $to = $s['time_out']- time(); //タイムアウト
+                    if($to<1600) $pinch = "pinch";
                     if($to<60) $dai->time_out = $to.'秒'; //タイムアウト
                     else $dai->time_out = round($to/60).'分'; //タイムアウト
                     $dai->dollar_box = $s['dollar_box']; //持ちメダル
@@ -532,7 +536,7 @@ class dai extends Authenticatable
             $f->myplay = $myplay;
 
         }
-        return true;
+        return $pinch;
 
     }
 

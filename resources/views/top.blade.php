@@ -3,6 +3,15 @@
 @include('common.topmenu')
 
 @section('content')
+
+<span id="foxOnly" class="displayNone">
+@if($pinch)
+{{--<audio src="{{ asset('/sound/sound1.mp3') }}" id="sound"  autoplay controls></audio>--}}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qNrRnnG8glY/<video_id>?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<span id="pinch" style="display:none;">pinch</span>
+@endif
+</span>
+
 <div id="content">
 <h1>ようこそ【Hero's Eye】へ!</h1>
 
@@ -13,7 +22,6 @@
 Twitter：{{$hall->twitter}}<br>
 
 <br><br><br><br>
-
 <h1>ぽんちゃんプレイ中</h1>
 <?php $totalKati=0;?>
 <table>
@@ -159,9 +167,6 @@ Twitter：{{$hall->twitter}}<br>
 
 
 @endforeach
-
-
-
 
 
 

@@ -38,8 +38,9 @@ Route::any('/dataget', "App\Http\Controllers\TopController@dataget");
 Route::any('/hallRefresh', "App\Http\Controllers\TopController@hallRefresh");
 
 //api
-Route::any('/apidataget', "App\Http\Controllers\TopController@apidataget");
-Route::any('/apiMatome', "App\Http\Controllers\TopController@apiMatome");
+Route::middleware(['auth:sanctum', 'verified'])->any('/apidataget', "App\Http\Controllers\ApiController@apidataget");
+Route::middleware(['auth:sanctum', 'verified'])->any('/apiMatome', "App\Http\Controllers\ApiController@apiMatome");
+Route::middleware(['auth:sanctum', 'verified'])->any('/apiPlayNow', "App\Http\Controllers\ApiController@apiPlayNow");
 
 Auth::routes();
 

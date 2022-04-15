@@ -10,7 +10,7 @@ $headers = [
     'Content-Type'=> 'application/json;charset=UTF-8',
     'Accept'=> 'application/json, text/plain, */*',
 //    'ir-ticket'=> '4e33eb8cb59f1f1a74774484cb59ee51ee326004',
-    'ir-ticket'=> '04e989100975bef3358585d2554af247c19d9ebe',
+    'ir-ticket'=> '781448ec8d56bef0ba5417e4c9f54a67926ffdcf',
     'sec-ch-ua-platform'=> '"Windows"',
     'Origin'=> 'https://el-drado.com',
     'Sec-Fetch-Site'=> 'same-site',
