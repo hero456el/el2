@@ -27,7 +27,7 @@ $("#aj").click(function () {
 
 
 window.addEventListener('load', function(){
-      if(firefox && topPage){
+      if(firefox){
         $('#foxOnly').removeClass('displayNone');
         setTimeout(reloadTop, 1000*60*5, '');
       }
