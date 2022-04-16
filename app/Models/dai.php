@@ -601,7 +601,7 @@ class dai extends Authenticatable
         $global = config('global');
         $url = $global["sitdownUrl"];
         $floor_id = 11 + $global["toFloorId"][$ima["hall"]];
-        $machine_id = '100500423';
+        $machine_id = '100530422';
 /*
         $url = 'https://api.el-drado.com/hall/enterhall';
         $response = Http::withHeaders($global["apiHead"])
@@ -611,8 +611,9 @@ class dai extends Authenticatable
             'mst_machine_id' => $machine_id,
         ]);
         $res = $response['body']; //これやらないとデータ空
-
+*/
         $url = $global["sitdownUrl"];
+        $url = 'https://api.el-drado.com/balance/payoff';
         $response = Http::withHeaders($global["apiHead"])
         ->post($url, [
             'mst_floor_id' => $floor_id,
@@ -620,7 +621,9 @@ class dai extends Authenticatable
             'mst_machine_id' => $machine_id,
         ]);
         $res = $response['body']; //これやらないとデータ空
-*/
+
+
+        /*
         // 台辞める
         $url = 'https://api.el-drado.com/balance/payoff';
         // プロフィール
@@ -695,7 +698,7 @@ class dai extends Authenticatable
         ]);
 */
 
-        return $response2;
+        return $response;
     }
 
 

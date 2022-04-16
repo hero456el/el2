@@ -9,8 +9,9 @@ $headers = [
     'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
     'Content-Type'=> 'application/json;charset=UTF-8',
     'Accept'=> 'application/json, text/plain, */*',
-//    'ir-ticket'=> '4e33eb8cb59f1f1a74774484cb59ee51ee326004',
-    'ir-ticket'=> '781448ec8d56bef0ba5417e4c9f54a67926ffdcf',
+    //    'ir-ticket'=> '4e33eb8cb59f1f1a74774484cb59ee51ee326004',631e5703-bcc6-11ec-bac2-5254001d8a87
+    //ir-ticket: 21f2448b76b98dd01463fbd0c4ab074d71a3588a
+    'ir-ticket'=> '645752632b35c674e47d1cd5fd6bbdd562ebadb9',
     'sec-ch-ua-platform'=> '"Windows"',
     'Origin'=> 'https://el-drado.com',
     'Sec-Fetch-Site'=> 'same-site',
