@@ -33,10 +33,6 @@ class floor extends Authenticatable
         $ima["hall_id"] = ($G>9 && $G<22)? "100100002":"100100003";
         $ima["hall"] = ($G>9 && $G<22)? "2":"3";
 
-       //✖✖✖✖✖✖✖✖✖消す
-        $ima["hall_id"] = ($G>9 && $G<22)? "100100002":"100100002";
-        $ima["hall"] = ($G>9 && $G<22)? "2":"2";
-
         //現在時刻より営業日取得
         $date = date("Y-m-d");
         if($G<10) $date = date("Y-m-d", strtotime("-1 day"));
