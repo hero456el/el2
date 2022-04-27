@@ -14,6 +14,7 @@ dPZMysHo6kcegHFYsacB2d+nZbMGvdhOqmmiJzrzE5k=
 
 
 ■git コミット
+cd C:\Users\owner\OneDrive\project\heroseye
 git add .
 git commit -m ''
 git push
@@ -24,3 +25,6 @@ git pull
 yan-at-164615551016
 dPZMysHo6kcegHFYsacB2d+nZbMGvdhOqmmiJzrzE5k=
 php artisan migrate
+
+■ロールバック
+php artisan migrate:rollback --step=1

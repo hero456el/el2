@@ -51,7 +51,8 @@ class TopController extends Controller
 
     //sit
     public function sit(){
-        $test = dai::sitdown();
+        //$test = dai::sitdown(5,28);
+        $test = 'ss';
         return view ('sit', ['test' => $test, 'test2' => "sss"]);
     }
 
@@ -73,7 +74,7 @@ class TopController extends Controller
         }
 
         //着席情報
-        $pinch = dai::sit($floor);
+        $pinch = dai::sitData($floor);
 //        return view ('test', ['test1' => $sit, 'test2' => "sss"]);
 
         return view('top', [

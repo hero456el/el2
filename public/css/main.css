@@ -1,4 +1,25 @@
-/*maincss*/
+
+/* ■クリア */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance:textfield;
+}
+
+
+/* ■全体 */
+input{padding:2px 4px;}
+::placeholder {color: #ccc;}
+
+/* ■汎用 */
+.w38{width:38px;}
+.w100{width:100px;}
+.tr{text-align:right;}
+.cb{clear: both;}
+
+
+/* ■maincss */
 
 #content{
 	width: 980px;
@@ -64,4 +85,145 @@
 .displayNone{
 	display: none;
 }
+
+/*■cinnamonPatrol*/
+.sitContent{
+	background: url('../img/shinamonBg.jpg');
+}
+
+.sitContent .f2{
+    width: 800px;
+}
+
+.sitContent .f2 label{
+    display: inline-block;
+    width: 90px;
+    height: 35px;
+}
+
+.sitContent .f3 span{
+    display: inline-block;
+	width: 65px;
+	height: 30px;
+}
+
+.sitContent .f3 label input{
+	width: 400px;
+}
+
+.check-box {
+  cursor: pointer;
+}
+
+.check-box input {
+  display: none;
+}
+
+.check-box input + span:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: 0.25em;
+  margin: 0 2px 0 0;
+  background-image: none, url("../img/checkbox-box.png");
+  background-size: 100% auto, 40%;
+  background-position: top 55% left 50%, 11px 5px;
+  background-repeat: no-repeat, no-repeat;
+  width: 40px;
+  height: 20px;
+}
+
+.check-box input:checked + span:before {
+  background-image: url("../img/checkbox-check3.png"), url("../img/checkbox-box.png");
+}
+
+.check-box input:checked + span {
+      font-weight: bold;
+      color: #f334ed;
+}
+
+/*
+.check-box input + span:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: 0.25em;
+  margin: 0 5px 0 0;
+  background-image: none, url("../img/checkbox-box.png");
+  background-size: 68% auto, 100%;
+  background-position: top 55% left 50%, 0 0;
+  background-repeat: no-repeat, no-repeat;
+  width: 19px;
+  height: 18px;
+}
+
+.check-box input:checked + span:before {
+  background-image: url("../img/checkbox-check4.jpg"), url("../img/checkbox-box.png");
+}
+*/
+
+td,label,tr{
+	padding:0;
+	margin:0;
+}
+
+.shinaImg{
+	height: 200px;
+    vertical-align: bottom;
+}
+
+.serch,.serchNow{
+	padding:3px;
+	font-size: 18px;
+    width: 380px;
+}
+
+.cinnaLeft{
+    display: inline-block;
+    float: left;
+    width: 400px;
+}
+
+.cinnaRight{
+    display: inline-block;
+    float: left;
+    padding-left: 10px;
+    width: 550px;
+}
+
+.seikaTime{
+    font-size: 1.4em;
+    font-weight: bold;
+    padding: 0;
+    margin: 5px 20px 5px 0;
+    display: inline-block;
+}
+
+.tukaikata{
+	font-size: 12px;
+    font-weight: normal;
+    border: 1px solid;
+    padding: 1px 3px;
+    vertical-align: middle;
+    margin: 0px 0 2px 0;
+    display: inline-block;
+    background: white;
+}
+
+.cpError{
+	color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -14,6 +14,7 @@ use App\Models\dai;
 use App\Models\floor;
 use App\Models\kisyu;
 use App\Models\hall;
+use App\Models\cinnamonPatrol;
 
 class dai extends Authenticatable
 {
@@ -76,6 +77,8 @@ class dai extends Authenticatable
             ->get();
         }
 
+        //シナモンパトロール中か
+        $cpGo = cinnamonPatrol::goStop('now');
 
         //global変数取得
         $global = config('global');
@@ -106,6 +109,30 @@ class dai extends Authenticatable
             if($f["rate"]!=$floor2[$index]["rate"]) $notYesterday2 = 1;
             if($f["kankin"]!=$floor2[$index]["kankin"]) $notYesterday2 = 1;
             if($floor1[$index]["lastUpdate"])  $notYesterday2 = 1;
+
+            //シナモンパトロール　ボーダー取得
+            if($cpGo){
+                $cp = cinnamonPatrol::where([
+                    'hall' => $ima['hall'],
+                    'date' => $ima['date'],
+                    'floor' => $f['floor'],
+                    'template' => 0,
+                ])->first();
+                if(!$cp){
+                    cinnamonPatrol::cpGet();
+                    $cp = cinnamonPatrol::where([
+                        'hall' => $ima['hall'],
+                        'date' => $ima['date'],
+                        'floor' => $f['floor'],
+                        'template' => 0,
+                    ])->first();
+                }
+
+                if($cp->go){
+                    $akiData = floor::akiDai($f['floor']);
+                }
+
+            }
 
 
             //台ごと回す
@@ -177,6 +204,31 @@ class dai extends Authenticatable
                     $kakuritu = $dai->tujyo/$dai->hatu;
                     if($kakuritu < $Vgood_line){ $Vgood++;}
                     elseif($kakuritu < $good_line){ $good++;}
+                }
+
+                //シナモンチェック
+                if($cpGo && $cp->go){
+                    //空き台なら
+                    if(!$akiData[$daiban-1]['usr_id']){
+                        //取る台かチェック
+                        $mes = cinnamonPatrol::torukai($dai, $cp);
+                        if($mes){
+                            //台取る
+                            $res = cinnamonPatrol::tore($floor_id, $machine_id, $mes);
+                            //空いてなかった
+                            if($res=='notaki'){
+                            }
+                        }
+                    }
+                    //タイムアウトチェック
+                    if($akiData[$daiban-1]['time_out'] < 10 && $akiData[$daiban-1]['time_out'] > 1){
+                        //取る台かチェック
+                        $mes = cinnamonPatrol::torukai($dai, $cp);
+                        if($mes){
+                            //ドゥル要請
+                        }
+                    }
+
                 }
 
 
@@ -452,14 +504,8 @@ class dai extends Authenticatable
 
 
     // 着席データ（引数はdaiList必須）
-    public static function sit($floor)
+    public static function sitData($floor)
     {
-        //現時刻のデータ
-        $ima = floor::ima();
-
-        //global変数取得
-        $global = config('global');
-
         //アカウントリスト
         $accountIdList = account::pluck('usr_id')->toArray();
         $accountList = account::pluck('name','usr_id')->toArray();
@@ -468,16 +514,7 @@ class dai extends Authenticatable
         $pinch = "";
 
         foreach($floor as $f){
-            //floorID
-            $floor_id = $f["floor"] + $global["toFloorId"][$ima["hall"]];
-
-            //API
-            $standby = Http::withHeaders($global["apiHead"])
-            ->post($global["url_list"], [
-                'mst_floor_id' => $floor_id,
-                'mst_hall_id' => $ima["hall_id"],
-            ]);
-            $sit = $standby['body']['machine']; //これやらないとデータ空
+            $sit = floor::akiDai($f['floor']);
 
             //返り値
             $akiVG = [];
@@ -489,19 +526,15 @@ class dai extends Authenticatable
                 if(isset($f->daiList[$i])) $dai = $f->daiList[$i];
                 else $dai = new dai();
 
-                //myplayとvgを更新
-                /*
-                if((in_array($s['usr_id'], $accountIdList)) ||
-                    ($dai->kakurituHyouka=='kakurituVeryGood')){
-                        dai::daiOne($f, $dai);
-                        if($dai->hatu) $dai->kakuritu = round($dai->tujyo / $dai->hatu);
-                        else $dai->kakuritu = "-";
-                }*/
-                if((in_array($s['usr_id'], $accountIdList))){
-                        dai::daiOne($f, $dai);
-                        if($dai->hatu) $dai->kakuritu = round($dai->tujyo / $dai->hatu);
-                        else $dai->kakuritu = "-";
+                //1台更新
+                if((in_array($s['usr_id'], $accountIdList))
+                    //|| ($dai->kakurituHyouka=='kakurituVeryGood')
+                ){
+                    dai::daiOne($f, $dai);
+                    if($dai->hatu) $dai->kakuritu = round($dai->tujyo / $dai->hatu);
+                    else $dai->kakuritu = "-";
                 }
+
                 //今打ってる台
                 if(in_array($s['usr_id'], $accountIdList)){
                     $dai->EL = $accountList[$s['usr_id']]; //EL
@@ -595,25 +628,24 @@ class dai extends Authenticatable
 
 
     // sitdown
-    public static function sitdown()
+    public static function sitdown($floor, $daiban)
     {
         $ima = floor::ima();
         $global = config('global');
         $url = $global["sitdownUrl"];
-        $floor_id = 11 + $global["toFloorId"][$ima["hall"]];
-        $machine_id = '100530422';
-/*
+        $addMachineId = (($floor-1)*40) + $global["toMachineId"][$ima["hall"]];
+        $floor_id = $floor + $global["toFloorId"][$ima["hall"]];
+        $machine_id = $daiban + $addMachineId;
+//        return $floor_id;
+
+        //入店
         $url = 'https://api.el-drado.com/hall/enterhall';
         $response = Http::withHeaders($global["apiHead"])
-        ->post($url, [
-            'mst_floor_id' => $floor_id,
-            'mst_hall_id' => $ima["hall_id"],
-            'mst_machine_id' => $machine_id,
-        ]);
+        ->post($url, [ ]);
         $res = $response['body']; //これやらないとデータ空
-*/
+
         $url = $global["sitdownUrl"];
-        $url = 'https://api.el-drado.com/balance/payoff';
+//        $url = 'https://api.el-drado.com/balance/payoff';
         $response = Http::withHeaders($global["apiHead"])
         ->post($url, [
             'mst_floor_id' => $floor_id,
@@ -621,6 +653,7 @@ class dai extends Authenticatable
             'mst_machine_id' => $machine_id,
         ]);
         $res = $response['body']; //これやらないとデータ空
+        return $res['result'];
 
 
         /*

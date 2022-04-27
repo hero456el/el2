@@ -10,25 +10,33 @@ class Update0415 extends Migration
     {
         Schema::table('account', function (Blueprint $table) {
             $table->string('sid')->nullable();
+            $table->boolean('go')->nullable();
         });
-        Schema::dropIfExists('play');
-        Schema::create('play', function (Blueprint $table) {
+        Schema::create('cinnamonPatrol', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('EL')->nullable();
+            $table->integer('hall')->nullable();
+            $table->date('date')->nullable()->comment('日付');
             $table->integer('floor')->nullable();
-            $table->integer('daiban')->nullable();
             $table->string('kisyu')->nullable();
+            $table->integer('kisyuId')->nullable();
+            $table->boolean('type')->nullable();
             $table->integer('rate')->nullable();
             $table->integer('kankin')->nullable();
-            $table->integer('tujyo')->nullable();
+            $table->integer('border')->nullable();
+            $table->integer('tenjyo')->nullable();
+            $table->integer('ren')->nullable();
+            $table->integer('borderPla')->nullable();
+            $table->integer('tenjyoPla')->nullable();
+            $table->integer('renPla')->nullable();
             $table->integer('hatu')->nullable();
-            $table->string('hatuHyouka')->nullable();
-            $table->integer('dedama')->nullable()->comment('出玉メダル');
-            $table->integer('syushi')->nullable()->comment('収支円');
-            $table->string('tamaHyouka')->nullable();
-            $table->integer('kaiho')->nullable()->comment('解放残り');;
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-
+            $table->string('target')->nullable();
+            $table->string('ng')->nullable();
+            $table->boolean('go')->nullable();
+            $table->boolean('template')->nullable()->default(0);
+        });
+        Schema::table('dai', function (Blueprint $table) {
+            $table->boolean('tyakuseki')->nullable();
+            $table->boolean('vgCheckSumi')->nullable();
         });
 
     }
@@ -36,12 +44,17 @@ class Update0415 extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('play');
+        Schema::table('account', function (Blueprint $table) {
+            $table->dropColumn('sid');
+            $table->dropColumn('go');
+        });
+        Schema::table('dai', function (Blueprint $table) {
+            $table->dropColumn('tyakuseki');
+            $table->dropColumn('vgCheckSumi');
+        });
+        Schema::dropIfExists('cinnamonPatrol');
     }
 
-    Schema::table('account', function (Blueprint $table) {
-        $table->dropColumn('sid');
-    });
 }
 
 

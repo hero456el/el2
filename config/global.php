@@ -21,6 +21,27 @@ $headers = [
     'Accept-Language'=> 'ja-JP,ja;q=0.9',
 ];
 
+$headers2 = [
+    'Accept'=> 'application/json, text/plain, */*',
+    'Accept-Encoding'=> 'gzip, deflate, br',
+    'Accept-Language'=> 'ja,en-US;q=0.9,en;q=0.8',
+    'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36',
+    'Content-Length'=> '77',
+    'Content-Type'=> 'application/json;charset=UTF-8',
+    'ir-ticket'=> '645752632b35c674e47d1cd5fd6bbdd562ebadb9',
+    'Referer'=> 'https://www.el-drado.com/',
+    'Origin'=> 'https://www.el-drado.com',
+    'sec-ch-ua'=> '" Not A;Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"',
+    'sec-ch-ua-mobile'=> '?0',
+    'sec-ch-ua-platform'=> '"Windows"',
+    'Sec-Fetch-Dest'=> 'empty',
+    'Sec-Fetch-Mode'=> 'cors',
+    'Sec-Fetch-Site'=> 'same-site',
+    'Connection'=> 'keep-alive',
+    'Host'=> 'api.el-drado.com',
+];
+
+
 //api url
 $daiApiUrlSlo = "https://api.el-drado.com/machine/detailSlot";
 $daiApiUrlPachi = "https://api.el-drado.com/machine/detailPachinko";
@@ -42,12 +63,15 @@ $toHallId = "100100000";
 
 //階数に足すとフロアIDになる。
 $toFloorId = [2=>"100300000", 3=>"100330000"];
+$toFloorId = [2=>"100300000", 3=>"100300000"];//✖✖✖✖✖✖✖✖消す
 
 //台番に足すとマシンIDになる。
 $toMachineId = [2=>"100500000", 3=>"100530000"];
+$toMachineId = [2=>"100500000", 3=>"100500000"];//✖✖✖✖✖✖✖✖消す
 
 return [
     'apiHead' => $headers,
+    'apiHead2' => $headers2,
     'toHallId' => $toHallId,
     'toFloorId' => $toFloorId,
     'toMachineId' => $toMachineId,

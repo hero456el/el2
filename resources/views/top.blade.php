@@ -4,6 +4,12 @@
 
 @section('content')
 
+<div id="content">
+
+@if(isset($pinch) && $pinch) <img src="{{url('/img/top2.jpg')}}" style="width:700px;">
+@else <img src="{{url('/img/top1.jpg')}}" style="width:700px;">
+@endif
+
 <span id="foxOnly" class="displayNone">
 @if($pinch)
 {{--<audio src="{{ asset('/sound/sound1.mp3') }}" id="sound"  autoplay controls></audio>--}}
@@ -12,7 +18,6 @@
 @endif
 </span>
 
-<div id="content">
 <h1>ようこそ【Hero's Eye】へ!</h1>
 
 日付：{{$hall->date}}（本日データ）<br>

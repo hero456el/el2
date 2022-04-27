@@ -14,6 +14,7 @@ use App\Models\dai;
 use App\Models\floor;
 use App\Models\kisyu;
 use App\Models\hall;
+use App\Models\cinnamonPatrol;
 
 
 class floor extends Authenticatable
@@ -31,6 +32,10 @@ class floor extends Authenticatable
         //現在時刻よりホールID取得
         $ima["hall_id"] = ($G>9 && $G<22)? "100100002":"100100003";
         $ima["hall"] = ($G>9 && $G<22)? "2":"3";
+
+       //✖✖✖✖✖✖✖✖✖消す
+        $ima["hall_id"] = ($G>9 && $G<22)? "100100002":"100100002";
+        $ima["hall"] = ($G>9 && $G<22)? "2":"2";
 
         //現在時刻より営業日取得
         $date = date("Y-m-d");
@@ -73,7 +78,7 @@ class floor extends Authenticatable
             //API
             $response = Http::withHeaders(config('global.apiHead'))
                 ->post(config('global.url_hall').$ima["hall_id"]);
-            if(!isset($response['body']['floor'])) return false; //apiの戻りが空ならエラー
+            if(!isset($response['body']['floor'])) return false;  //お休み中
             $res = $response['body']['floor'];
 
 
@@ -169,6 +174,68 @@ class floor extends Authenticatable
         if($floorList->isEmpty()) return false;
         else return $floorList;
     }
+
+
+
+    // 空台情報
+    public static function akiDai($floor)
+    {
+        //現時刻のデータ
+        $ima = floor::ima();
+
+        //global変数取得
+        $global = config('global');
+
+
+        $floor_id = $floor + $global["toFloorId"][$ima["hall"]];
+
+        //API
+        $result = Http::withHeaders($global["apiHead"])
+        ->post($global["url_list"], [
+            'mst_floor_id' => $floor_id,
+            'mst_hall_id' => $ima["hall_id"],
+        ]);
+        $res = $result['body']['machine']; //これやらないとデータ空
+        if(!$res) return false; //お休み中
+
+        //ボーナス中なら取る
+        foreach($res as $key => $d){
+            //タイムアウト時間計算
+            $to = $d['time_out']-time();
+            $to = ceil($to/60);
+            if($to < 1) $to = 0;
+            $d['time_out'] = $to;
+
+            if($d['bonus']){
+                //空台なら取っちゃえ
+                if(!$d['usr_id']){
+                    cinnamonPatrol::tore($floor_id, $d['mst_machine_id'], 'bunus');
+
+                //タイムアウト10分以内ならドゥル要請
+                }elseif($d['time_out'] <10 && $d['time_out'] >1){
+                    $mes = 'bonus中-'.$floor.'F '.($key+1).'番台 '.$kisyu["name"];
+                    $cpMes = new cinnamonPatrol();
+                    $cpMes->target = $mes;
+                    $cpMes->template = 3;
+                    $cpMes->save();
+                }
+            }
+        }
+
+        return $res;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 /*
     //veryGoodをカウントし直し
     public static function vgCount(){

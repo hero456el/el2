@@ -32,6 +32,18 @@ Route::middleware(['auth:sanctum', 'verified'])->any('/{date}/{hall}/{floor}/{da
 
 Route::middleware(['auth:sanctum', 'verified'])->any('/sit', "App\Http\Controllers\TopController@sit");
 
+//シナモンパトロール
+Route::middleware(['auth:sanctum', 'verified'])->any('/cinnamonPatrol', "App\Http\Controllers\cinnamonPatrolController@cpTop");
+Route::middleware(['auth:sanctum', 'verified'])->any('/cinnamonPatrol2', "App\Http\Controllers\cinnamonPatrolController@cpTop2");
+Route::middleware(['auth:sanctum', 'verified'])->any('/uid', "App\Http\Controllers\cinnamonPatrolController@uid");
+Route::middleware(['auth:sanctum', 'verified'])->any('/boyInsert', "App\Http\Controllers\cinnamonPatrolController@boyInsert");
+Route::middleware(['auth:sanctum', 'verified'])->any('/boyGo', "App\Http\Controllers\cinnamonPatrolController@boyGo");
+Route::middleware(['auth:sanctum', 'verified'])->any('/cpShiji', "App\Http\Controllers\cinnamonPatrolController@cpShiji");
+Route::middleware(['auth:sanctum', 'verified'])->any('/goStop', "App\Http\Controllers\cinnamonPatrolController@goStop");
+Route::middleware(['auth:sanctum', 'verified'])->any('/allSidCheck', "App\Http\Controllers\cinnamonPatrolController@allSidCheck");
+Route::middleware(['auth:sanctum', 'verified'])->any('/gogo', "App\Http\Controllers\cinnamonPatrolController@gogo");
+Route::middleware(['auth:sanctum', 'verified'])->any('/seika', "App\Http\Controllers\cinnamonPatrolController@seika");
+
 //現在の台情報取得
 Route::any('/dataget', "App\Http\Controllers\TopController@dataget");
 //ホールリフレッシュ

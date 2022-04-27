@@ -3,7 +3,13 @@
 @include('common.topmenu')
 
 @section('content')
+
 <div id="content">
+
+@if(isset($pinch) && $pinch) <img src="{{url('/img/top2.jpg')}}" style="width:700px;">
+@else <img src="{{url('/img/top1.jpg')}}" style="width:700px;">
+@endif
+
 <p>{{$hall->date}}</p>
 
 日付：{{$hall->date}}<br>
