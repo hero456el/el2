@@ -1,0 +1,437 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"y",
+				"type"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/Models/dai_data.php",
+			"settings":
+			{
+				"buffer_size": 16129,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/Models/cinnamonPatrol.php",
+			"settings":
+			{
+				"buffer_size": 25666,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/Http/Controllers/cinnamonPatrolController.php",
+			"settings":
+			{
+				"buffer_size": 4080,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/Http/Controllers/LineApiController.php",
+			"settings":
+			{
+				"buffer_size": 5255,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+			]
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: Install Package",
+				"Package Control: Install Package"
+			],
+			[
+				"Install Package Control",
+				"Install Package Control"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 130.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/heroseye",
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/heroseye/.metadata",
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/heroseye/app",
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/heroseye/app/Actions",
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/heroseye/app/Http",
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/heroseye/app/Http/Controllers",
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/heroseye/app/Models"
+	],
+	"file_history":
+	[
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/heroseye/app/Http/Controllers/Controller.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/views/layouts/app.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/views/api/api-token-manager.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/views/profile/logout-other-browser-sessions-form.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/views/auth/register.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/views/dashboard.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/views/profile/update-password-form.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/routes/web.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/lang/ja.json",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/config/fortify.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/.env",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/views/layouts/guest.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/app/Models/User.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/views/auth/login.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/config/mail.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/config/app.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/routes/api.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/lang/ja/validation.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/lang/ja/validation-inline.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/lang/ja/passwords.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/lang/ja/pagination.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis4/resources/lang/ja/auth.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis/resources/views/layouts/guest.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis/resources/views/layouts/app.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis/resources/views/auth/login.blade.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis/resources/lang/ja/validation-inline.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis/resources/lang/ja/validation.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis/routes/web.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis/config/app.php",
+		"/C/Users/81903.DESKTOP-GBA336J.000/Dropbox/project/artemis/resources/css/app.css",
+		"/C/Users/81903.DESKTOP-GBA336J.000/OneDrive/project/All_Share/server.php"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"リセット",
+			"register",
+			"一致",
+			"LOG",
+			"リセット",
+			"電子",
+			"youko",
+			"vita"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/Models/dai_data.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16129,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13546,
+								13546
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6314.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/Models/cinnamonPatrol.php",
+					"selected": true,
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 25666,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 14326.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "app/Http/Controllers/cinnamonPatrolController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4080,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3755,
+								3755
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1824.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/Http/Controllers/LineApiController.php",
+					"selected": true,
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 5255,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1408,
+								1441
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 228.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			],
+			[
+				2,
+				0,
+				3,
+				1
+			],
+			[
+				3,
+				0,
+				4,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.25,
+			0.5,
+			0.75,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "hero.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 1,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 331.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

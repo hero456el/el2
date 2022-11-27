@@ -68,7 +68,43 @@ class hall extends Authenticatable
 
         $hall = hall::where(['hall'=>$hall,'date'=>$date])->first();
         return $hall;
+    }
 
+    //前日と翌日のリンク
+    public static function hallLink($hall, $date){
+        $temp = str_split($date, 4);
+        $temp1 = str_split($temp[1], 2);
+        $day = $temp[0].'-'.$temp1[0].'-'.$temp1[1];
+
+        $nextDay = '';
+        $next = hall::where(['hall'=>$hall])
+            ->where('date', '>', $day)
+            ->orderBy('date', 'asc')
+            ->first();
+        if($next) $nextDay = str_replace('-','',$next->date);
+
+        $beforDay = '';
+        $befor = hall::where(['hall'=>$hall])
+            ->where('date', '<', $day)
+            ->orderBy('date', 'desc')
+            ->first();
+        if($befor) $beforDay = str_replace('-','',$befor->date);
+
+        return ['nextDay'=>$nextDay, 'beforDay'=>$beforDay];
+    }
+
+    //最終更新時刻取得
+    public static function koshin(){
+        $ima = floor::ima();
+        $lastUpdate = floor::where('date', $ima['date'])
+            ->where('hall', $ima['hall'])
+            ->select('lastUpdate')
+            ->orderBy('lastUpdate', 'asc')
+            ->first()
+            ->toArray();
+        $res = $lastUpdate? $lastUpdate['lastUpdate']: '';
+
+        return $res;
     }
 
     //最新情報反映

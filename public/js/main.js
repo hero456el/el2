@@ -10,14 +10,25 @@ var uri = new URL(window.location.href);
 if(uri.pathname == '/heroseye/public/'){topPage = 1;}
 
 //localhostかどうか
-var apiUrl = "http://ec2-54-84-54-214.compute-1.amazonaws.com";
+//var apiUrl = "http://ec2-54-84-54-214.compute-1.amazonaws.com";
+var apiUrl = "https://aroma-luna.floppy.jp/hero2/public";
 if ( uri.href.match(/localhost/)) {apiUrl = "http://localhost/heroseye/public";}
 
 //intervalId
-var intervalId;
+var intervalId1;
+var intervalId2;
+var intervalId3;
+var intervalId4;
 
 //seika
 var seika = '';
+var dull = '';
+
+//ドゥルアタック
+var attackStart=''; //ドゥル開始時間
+var attackMokuhyo=''; //目標時間
+
+
 
 //ボタンを押したタイミングで発火する
 $("#aj").click(function () {
@@ -30,12 +41,11 @@ $("#aj").click(function () {
   }
 });
 
-
 //サイト読み込み時
 window.addEventListener('load', function(){
       //ウブラブ
       if(firefox){
-        $('#foxOnly').removeClass('displayNone');
+        $('.foxOnly').removeClass('displayNone');
         setTimeout(reloadTop, 1000*60*5, '');
       }
 
@@ -45,7 +55,9 @@ window.addEventListener('load', function(){
 	  //シナモンパトロールGOなら
       if($('.goStop').text()==1){
         imgChangeSagasu();
+        GOGO();
       }
+
 });
 
 function reloadTop(){
@@ -72,7 +84,10 @@ function heroAjax(){
     dataType: "json",}).done((res) => {
       floorCount++;
       $("#floorCount").text(floorCount+'/75');
-      if(floorCount==75){matome();}
+      if(floorCount==75){
+        document.location.href = apiUrl;
+//        matome();
+      }
     }).fail((error)=>{floorCount++;});}
 
 
@@ -107,8 +122,9 @@ function showClock2() {
 //■シナモンパトロール
 //クロール実行
 function GOGO(){
+  console.log(showClock2()+'メインパトロールGo');//★★★test★★★
   for(i=1; i<=15; i++){
-    GOGOajax(i);
+    setTimeout(GOGOajax, 700*i, i); //0.7秒置き
   }
 }
 
@@ -118,9 +134,10 @@ function GOGOajax(floor){
     url: apiUrl+"/gogo?f="+floor,
     dataType: "json",}).
     done((res) => {
+//      console.log(res);
       $('.cpError').text('');
     }).fail((error)=>{
-    console.log(error);
+//    console.log(error);
       $('.cpError').text('シナモンパトロール失敗');
     });
 
@@ -129,6 +146,7 @@ function GOGOajax(floor){
 //成果の表示
 function seikaHyouji() {
   $('.seikaTime').text(showClock2());
+  /*
   $.ajax({
     type: "get",
     url: apiUrl+"/seika",
@@ -140,8 +158,81 @@ function seikaHyouji() {
       });
       $('.seika').html(seika);
     }).fail((error)=>{});
+    */
+
+  $.ajax({
+    type: "get",
+    url: apiUrl+"/dull",
+    dataType: "json",}).
+    done((res) => {
+      dull = '';
+      res.forEach(e => {
+          //dullがなければアタック終了
+          if(e.mess=='nothing') attackEnd();
+//          else{
+	          dull += '・'+e.mess+'<br>';
+//			  console.log(e.time);//★★★test★★★
+//	          if(e.time){ //ドゥルアタック
+//	            if(attackMokuhyo>e.time || attackMokuhyo==""){
+//	              console.log('目標セット');//★★★test★★★
+//	              attackMokuhyo = e.time;
+//	              if(intervalId3){clearInterval(intervalId3);}
+//	              intervalId3 = setInterval(dAttack, 1000*1, ''); //1秒毎に
+//	            }
+//	          }
+//	      }
+      });
+      $('.dull').html(dull);
+    }).fail((error)=>{});
+}
+
+//ドゥルアタック
+function dAttack() {
+  console.log('1秒ごとアタック待機');//★★★test★★★
+  var diff = attackMokuhyo - Math.round(Date.now()/1000);
+  console.log(diff+'秒後にアタック');//★★★test★★★
+  if(diff<5){
+    console.log('アタックGo');//★★★test★★★
+    if(intervalId3){clearInterval(intervalId3);}
+    attackStart = Date.now();
+    intervalId4 = setInterval(dAttackAjax, 500, ''); //0.5秒毎に
+  }
+}
+
+//アタック実行
+function dAttackAjax() {
+//  if(intervalId2){clearInterval(intervalId2);}
+//  intervalId2="";
+  console.log('アタック実行');//★★★test★★★
+  if((attackStart+6000) < Date.now() ){ //6秒で終わり
+    attackEnd();
+    console.log('6秒オーバー');//★★★test★★★
+  }
+  $.ajax({
+    type: "get",
+    url: apiUrl+"/dAttack",
+    dataType: "json",}).
+    done((res) => {
+      if(res=='end'){attackEnd();}
+    }).fail((error)=>{});
 
 }
+
+//アタック終了
+function attackEnd() {
+/*
+    if(intervalId3){clearInterval(intervalId3);}
+    if(intervalId4){clearInterval(intervalId4);}
+    attackStart="";
+    attackMokuhyo="";
+    intervalId3="";
+    intervalId4="";
+//    if(!intervalId2){intervalId2 = setInterval(GOGO, 1000*3*1, '');} //bonus中探し
+    console.log('nothing　アタック終了');//★★★test★★★
+*/
+}
+
+
 
 
 //発動セット
@@ -159,8 +250,9 @@ function imgChangeSagasu(){
   $('.mainShina').attr('src','img/shina_sagasu.gif?'+(new Date).getTime());
   $('.serch').addClass('displayNone');
   $('.serchNow').removeClass('displayNone');
-  intervalId1 = setInterval(seikaHyouji, 1000*1*1, '');
-  intervalId2 = setInterval(GOGO, 1000*1*3, '');
+  intervalId1 = setInterval(seikaHyouji, 1000*10*1, ''); //成果表示
+  intervalId2 = setInterval(GOGO, 1000*30*1, ''); //bonus中探し
+   //全台クロール
 }
 
 //解除
@@ -172,7 +264,9 @@ $('.serchNow').click(function () {
     type: "get",
     url: apiUrl+"/goStop?go=0",
     dataType: "json",});
-  clearInterval(intervalId1 );
-  clearInterval(intervalId2 );
+  if(intervalId1){clearInterval(intervalId1);}
+  if(intervalId2){clearInterval(intervalId2);}
+  intervalId1="";
+  intervalId2="";
 });
 

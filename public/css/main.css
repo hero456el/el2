@@ -6,6 +6,9 @@ input::-webkit-outer-spin-button {
     margin: 0;
     -moz-appearance:textfield;
 }
+ol, ul {
+  list-style-type: none;
+}
 
 
 /* ■全体 */
@@ -17,6 +20,31 @@ input{padding:2px 4px;}
 .w100{width:100px;}
 .tr{text-align:right;}
 .cb{clear: both;}
+.b{font-weight:bold;}
+.displayNone{display: none;}
+
+
+
+/* ■topmenu */
+#toplist li{
+	width: 14%;
+    display: inline-block;
+    float: left;
+    overflow: hidden;
+    margin: 0 3%;
+}
+
+#toplist{
+	width: 100%;
+    overflow: hidden;
+    margin: 15px 0 30px 0;
+    padding: 0;
+}
+
+#toplist li a img{
+     width: 100%;
+}
+
 
 
 /* ■maincss */
@@ -24,6 +52,11 @@ input{padding:2px 4px;}
 #content{
 	width: 980px;
 }
+
+.topImge{
+	width: 100%;
+}
+
 .dai{
 	width: 12%;
 	float: right;
@@ -82,9 +115,12 @@ input{padding:2px 4px;}
 	color: blue;
 }
 
-.displayNone{
-	display: none;
+.aki{
+	font-weight: bold;
+    float: right;
+    padding-right: 5px;
 }
+
 
 /*■cinnamonPatrol*/
 .sitContent{
@@ -213,17 +249,88 @@ td,label,tr{
 .cpError{
 	color: red;
 }
+/*
+.cpStop{
+    pointer-events: none;
+    color: #aaa;
+}
+
+.cpStop input
+{
+    pointer-events: none;
+    color: #aaa;
+    border: 1px solid #aaa;
+}
+*/
+/*■■■ news ■■■*/
+#news{
+    border: 1px solid;
+    padding: 5px;
+    margin: 5px 5px 5px 50px;
+    display: inline-block;
+}
+#news p{
+    margin: 0px;
+}
+#news ul{
+    margin: 0px;
+    padding: 0px;
+}
 
 
+/*■■■ EP ■■■*/
+.epTable td{
+    padding: 0 10px;
+    text-align: right;
+}
+
+.epTable .emp{
+    color: red;
+    font-weight: bold;
+}
+
+.syoji{
+    font-size: 1.4em;
+    color: blue;
+}
 
 
+/*■■■ 過去データ ■■■*/
+.mae{
+    padding: 20px 30px;
+    display: inline-block;
+    border: 1px solid #111;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0 30px;
+    float: left;
+}
+.tugi{
+    padding: 20px 30px;
+    display: inline-block;
+    border: 1px solid #111;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0 30px;
+    float: left;
+}
 
+.tugi span, .mae span{
+    font-weight: bold;
+    font-size: 1.5em;
+}
 
+.florShousai{
+    display: inline-block;
+    float: right;
+    float: left;
+}
 
-
-
-
-
-
+.notLink, .notLink span{
+	pointer-events: none;
+    background: #f1f1f1;
+    color: #cfcfcf;
+    border: none;
+}
 
 

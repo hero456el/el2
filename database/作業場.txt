@@ -1,0 +1,44 @@
+
+
+
+
+■awsパスワード
+eldra00Aws
+
+■git パスワード
+yan-at-164615551016
+dPZMysHo6kcegHFYsacB2d+nZbMGvdhOqmmiJzrzE5k=
+
+■heroseyeフォルダ
+ cd /var/www/heroseye
+
+
+■git コミット
+cd C:\Users\owner\OneDrive\project\heroseye
+git add .
+git commit -m ''
+git push
+
+■git pull
+cd /var/www/heroseye
+git pull
+yan-at-164615551016
+dPZMysHo6kcegHFYsacB2d+nZbMGvdhOqmmiJzrzE5k=
+php artisan migrate
+
+■ロールバック
+php artisan migrate:rollback --step=1
+
+
+■poderosa
+ホスト:
+ssh.lolipop.jp
+アカウント
+floppy.jp-aroma-luna
+パスワード
+ZexU3aqg0wKNMiroMLrRucAe3WAbvcFO
+
+php　使えないとき
+export PATH="$PATH:/usr/local/php/8.1/bin"
+
+

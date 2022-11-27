@@ -28,3 +28,17 @@ php artisan migrate
 
 ■ロールバック
 php artisan migrate:rollback --step=1
+
+
+■poderosa
+ホスト:
+ssh.lolipop.jp
+アカウント
+floppy.jp-aroma-luna
+パスワード
+ZexU3aqg0wKNMiroMLrRucAe3WAbvcFO
+
+php　使えないとき
+export PATH="$PATH:/usr/local/php/8.1/bin"
+
+

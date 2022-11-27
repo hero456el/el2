@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Log;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use App\Models\floor;
 use App\Models\kisyu;
 use App\Models\hall;
 use App\Models\account;
+use App\Models\cinnamonPatrol;
 
 
 
@@ -58,6 +60,8 @@ class TopController extends Controller
 
     //■Top画面
     public function now(){
+        Log::info("topへアクセス！");
+
         // データベースの情報更新
         kisyu::dbInsert();
 
@@ -67,6 +71,7 @@ class TopController extends Controller
 
         // ホールデータ取得
         $hall = hall::hallGet();
+        $lastUpdate = hall::koshin();
 
         //台データ取得
         foreach($floor as $f){
@@ -75,12 +80,24 @@ class TopController extends Controller
 
         //着席情報
         $pinch = dai::sitData($floor);
+        if($pinch=='oyasumi') return view('oyasumi', []);
 //        return view ('test', ['test1' => $sit, 'test2' => "sss"]);
 
+        //台データ取得
+        foreach($floor as $f){
+            $f->daiList = dai::daiList($f);
+        }
+
+        //dull
+        $dull =  cinnamonPatrol::dull();
+
         return view('top', [
+            'page' => 'top',
             'floor' => $floor,
             'hall' => $hall,
+            'lastUpdate' => $lastUpdate,
             'pinch' => $pinch,
+            'dull' => $dull,
         ]);
     }
 
@@ -88,7 +105,12 @@ class TopController extends Controller
     public function list(){
         $hallList = hall::hallList();
 
-        return view ('list', ['hallList' => $hallList, 'test2' => "ss"]);
+        return view ('list', [
+            'page' => 'hall',
+            'hallList' => $hallList,
+            'test2' => "ss",
+
+        ]);
     }
 
     //■ホール詳細
@@ -100,10 +122,17 @@ class TopController extends Controller
 
         // ホールデータ取得
         $hall = hall::hallGet($hall, $date);
+        $hallLink = hall::hallLink($hall->hall, $date);
+
+        //台データ取得
+        foreach($floor as $f){
+            $f->daiList = dai::daiList($f);
+        }
 
         return view('hall', [
             'floor' => $floor,
             'hall' => $hall,
+            'hallLink' => $hallLink,
         ]);
     }
 
@@ -120,13 +149,29 @@ class TopController extends Controller
         //台データ取得
         $daiList = dai::daiList($floor);
 
-//        return view ('test', ['test1' => $daiList, 'test2' => "sss"]);
-        return view ('floor', ['floor' => $floor, 'daiList' => $daiList]);
+        // ホールデータ取得
+        $hall = hall::hallGet($hall, $date);
+        $hallLink = hall::hallLink($hall->hall, $date);
+
+        return view ('floor', [
+            'floor' => $floor,
+            'daiList' => $daiList,
+            'hall' => $hall,
+            'hallLink' => $hallLink,
+        ]);
     }
 
     //■台詳細
     public function dai($date, $hall, $floor, $dai){
         return view ('commingsoon', ['test1' => "", 'test2' => "sss"]);
+    }
+
+    //■ログ
+    public function log(){
+        //$res = cinnamonPatrol::sendLine('バーベキュー楽しみだね。台が取れたらここから連絡するよ。');
+        $res = cinnamonPatrol::dAttack();
+
+        return view ('test', ['test1' => $res, 'test2' => "sss"]);
     }
 
 

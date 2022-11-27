@@ -22,6 +22,14 @@ Route::get('/', function () {
 });
 */
 
+
+
+// line webhook受取用
+Route::any('/line/callback',    'App\Http\Controllers\LineApiController@postWebhook');
+// line メッセージ送信用
+Route::get('/line/message/send', 'App\Http\Controllers\LineApiController@sendMessage');
+
+
 //Route::any('/', "App\Http\Controllers\TopController@now");
 Route::middleware(['auth:sanctum', 'verified'])->any('/', "App\Http\Controllers\TopController@now");
 Route::middleware(['auth:sanctum', 'verified'])->any('/list', "App\Http\Controllers\TopController@list");
@@ -43,6 +51,17 @@ Route::middleware(['auth:sanctum', 'verified'])->any('/goStop', "App\Http\Contro
 Route::middleware(['auth:sanctum', 'verified'])->any('/allSidCheck', "App\Http\Controllers\cinnamonPatrolController@allSidCheck");
 Route::middleware(['auth:sanctum', 'verified'])->any('/gogo', "App\Http\Controllers\cinnamonPatrolController@gogo");
 Route::middleware(['auth:sanctum', 'verified'])->any('/seika', "App\Http\Controllers\cinnamonPatrolController@seika");
+Route::middleware(['auth:sanctum', 'verified'])->any('/uid', "App\Http\Controllers\cinnamonPatrolController@uid");
+Route::middleware(['auth:sanctum', 'verified'])->any('/dull', "App\Http\Controllers\cinnamonPatrolController@dull");
+Route::middleware(['auth:sanctum', 'verified'])->any('/dAttack', "App\Http\Controllers\cinnamonPatrolController@dAttack");
+
+
+//収支
+Route::middleware(['auth:sanctum', 'verified'])->any('/syushi', "App\Http\Controllers\cinnamonPatrolController@syushi");
+
+//ログ
+Route::middleware(['auth:sanctum', 'verified'])->any('/log', "App\Http\Controllers\TopController@log");
+
 
 //現在の台情報取得
 Route::any('/dataget', "App\Http\Controllers\TopController@dataget");
@@ -60,7 +79,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-
+/*
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -69,9 +88,7 @@ Route::middleware([
     Route::any('/', "App\Http\Controllers\TopController@now");
 });
 
-
-
-
+*/
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Log;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -25,8 +26,7 @@ class cinnamonPatrolController extends Controller
 //        $a = cinnamonPatrol::akiDai(1);
 //        return view ('test', ['test' => $a, 'test2' => "sss"]);
 
-
-
+        //cinnamonPatrol::sendLine('test');
 
         // パトロールデータ
         $floor = cinnamonPatrol::cpGet();
@@ -43,6 +43,9 @@ class cinnamonPatrolController extends Controller
         //seika
         $seika =  cinnamonPatrol::seika();
 
+        //dull
+        $dull =  cinnamonPatrol::dull();
+
         $ima = floor::ima();
         $global = config('global');
         $addMachineId = ((12-1)*40) + $global["toMachineId"][3];
@@ -52,11 +55,13 @@ class cinnamonPatrolController extends Controller
 
 
         return view ('cinnamonPatrol', [
+            'page' => 'cinnamon',
             'floor' => $floor,
             'go' => $go,
             'sid' => $sid,
             'goStop' => $goStop,
             'seika' => $seika,
+            'dull' => $dull,
             'test' => $test,
 
         ]);
@@ -69,6 +74,11 @@ class cinnamonPatrolController extends Controller
 
     // uid登録
     public function uid(Request $request){
+
+        //$crawl = cinnamonPatrol::dullShite(1,10, 8,'1651651356','hellooo');
+        $dull = cinnamonPatrol::dull();
+        cinnamonPatrol::sendMail();
+        return view ('test', ['test1' => $dull, 'test2' => "sss"]);
         return view ('uid', ['test' => 'ss', 'test2' => "sss"]);
     }
 
@@ -117,10 +127,11 @@ class cinnamonPatrolController extends Controller
 
     // クロール実行
     public function gogo(Request $request){
+        Log::info('メインクロール');//★★★log★★★
         $floor = $request->input('f');
         $res = cinnamonPatrol::crawl($floor);
-        if(!$res) return false; //お休み中
-        return true;
+//        if(!$res) return false; //お休み中
+//        return true;
         return json_encode([$res]);
     }
 
@@ -130,7 +141,32 @@ class cinnamonPatrolController extends Controller
         return json_encode($seika);
     }
 
+    // ドゥル要請表示
+    public function dull(){
+        $dull = cinnamonPatrol::dull();
+        return json_encode($dull);
+    }
 
+    // ドゥルアタック
+    public function dAttack(){
+        $res = cinnamonPatrol::dAttack();
+        return json_encode([$res]);
+        //return json_encode(['end']); //ajax成功の形
+        //return 'error'; //エラーの形
+    }
+
+
+
+    // ■■■■■収支■■■■■
+    public function syushi(){
+        $syushiList = account::syushi();
+        //return view ('test', ['test1' => $syushiList, 'test2' => "sss"]);
+        return view ('syushi', [
+            'page' => 'ep',
+            'syushiList' => $syushiList,
+        ]);
+
+    }
 
 
 

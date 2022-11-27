@@ -47,11 +47,17 @@ class kisyu extends Authenticatable
     //データベースにインサート
     public static function dbInsert($tuika=null){
         $jyu = kisyu::all()->find(10);
+        if(!$jyu){
+            $jyu = new kisyu();
+            $jyu->id = 10;
+            $jyu->name = 'Honey♡Collection';
+            $jyu->type = 1;
+        }
         $jyu->tenjyo = 999;
         $jyu->oneK = 35;
-        $jyu->kakurituVeryGood = 100;
-        $jyu->kakurituGood = 120;
-        $jyu->kakurituBad = 160;
+        $jyu->kakurituVeryGood = 50;
+        $jyu->kakurituGood = 70;
+        $jyu->kakurituBad = 100;
         $jyu->save();
 
         $an = kisyu::all()->find(6);
@@ -100,6 +106,17 @@ class kisyu extends Authenticatable
         $id="4600"; $name="EL23"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="4602"; $name="EL25"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
         $id="4607"; $name="EL29"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="19121"; $name="EL103"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="19120"; $name="EL102"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="19118"; $name="EL101"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="19116"; $name="EL100"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="19122"; $name="EL104"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="21098"; $name="EL105"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="1024"; $name="EL1"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="1153"; $name="EL2"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="1034"; $name="EL5"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="1023"; $name="EL6"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
+        $id="1208"; $name="EL7"; if(!account::where(['usr_id'=>$id])->exists()) account::create(['usr_id'=>$id,'name'=>$name]);
 
         if(!User::where(['id'=>'1'])->exists()){
             DB::table('users')->insert([

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use Log;
 use Illuminate\Support\Facades\Http;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -111,6 +112,7 @@ class dai extends Authenticatable
             if($floor1[$index]["lastUpdate"])  $notYesterday2 = 1;
 
             //シナモンパトロール　ボーダー取得
+            $akiData = floor::akiDai($f['floor']);
             if($cpGo){
                 $cp = cinnamonPatrol::where([
                     'hall' => $ima['hall'],
@@ -127,12 +129,13 @@ class dai extends Authenticatable
                         'template' => 0,
                     ])->first();
                 }
-
+/*
                 if($cp->go){
                     $akiData = floor::akiDai($f['floor']);
                 }
-
+*/
             }
+
 
 
             //台ごと回す
@@ -193,6 +196,7 @@ class dai extends Authenticatable
                 //APIのデータ格納
                 if(!$f["lastUpdate"] || $resData["total_spin_count"] > $dai->totalSpin){
                     dai::resToModel($dai, $resData, $kisyu, $f);
+                    $dai->tyakuseki = $akiData[$daiban-1]['usr_id']? 1: 0;
                     $dai->save();
                 }
                 $spinSum += $dai->totalSpin;
@@ -214,18 +218,18 @@ class dai extends Authenticatable
                         $mes = cinnamonPatrol::torukai($dai, $cp);
                         if($mes){
                             //台取る
-                            $res = cinnamonPatrol::tore($floor_id, $machine_id, $mes);
-                            //空いてなかった
-                            if($res=='notaki'){
-                            }
+                            cinnamonPatrol::tore($floor_id, $machine_id, $mes);
                         }
                     }
                     //タイムアウトチェック
-                    if($akiData[$daiban-1]['time_out'] < 10 && $akiData[$daiban-1]['time_out'] > 1){
+                    if($akiData[$daiban-1]['to'] < 1200 && $akiData[$daiban-1]['to'] > 1){
                         //取る台かチェック
                         $mes = cinnamonPatrol::torukai($dai, $cp);
                         if($mes){
                             //ドゥル要請
+                            cinnamonPatrol::dullShite($f["floor"], $daiban, $akiData[$daiban-1]['time_out'], $mes);
+
+                            //★★★ドゥル要請取り消し★★★
                         }
                     }
 
@@ -252,7 +256,7 @@ class dai extends Authenticatable
                         $daiNew = 1;
                     }
                     //APIのデータ格納
-                    if($daiNew || $resData["total_spin_count"] > $dai1->totalSpin){
+                    if($daiNew || (int)$resData["total_spin_count"] > (int)$dai1->totalSpin){
                         dai::resToModel($dai1, $resData, $kisyu, $floor1[$index]);
                         $dai1->save();
                     }
@@ -421,6 +425,23 @@ class dai extends Authenticatable
         }elseif($kisyu["name"]=="Honey♡Collection"){
             $spin = $res["spin_count"];
             $tujyo = 0;
+
+             if($spin>=33) $tujyo += 3.4;
+             if($spin>=77) $tujyo += 3.1;
+             if($spin>>=111) $tujyo += 11;
+             if($spin>>=222) $tujyo += 22.9;
+             foreach($history as $b){
+                 if($b["spin"]>=33) $tujyo += 3.4;
+                 if($b["spin"]>=77) $tujyo += 3.1;
+                 if($b["spin"]>=111) $tujyo += 11;
+                 if($b["spin"]>=222) $tujyo += 22.9;
+                 if($b["spin"]>=33 && $b["spin"]<=38) $hatu++;
+                 if($b["spin"]>=77 && $b["spin"]<=82) $hatu++;
+                 if($b["spin"]>=111 && $b["spin"]<=116) $hatu++;
+                 if($b["spin"]>=222 && $b["spin"]<=227) $hatu++;
+             }
+
+            /*
             if($spin>38) $tujyo += 3.4;
             if($spin>82) $tujyo += 3.1;
             if($spin>116) $tujyo += 11;
@@ -430,13 +451,13 @@ class dai extends Authenticatable
                 if($b["spin"]>82) $tujyo += 3.1;
                 if($b["spin"]>116) $tujyo += 11;
                 if($b["spin"]>227) $tujyo += 22.9;
-                if($b["type"]==1){
+//                if($b["type"]==1){ //カウントするのはBIGのみ
                     if($b["spin"]>=33 && $b["spin"]<=38) $hatu++;
                     if($b["spin"]>=77 && $b["spin"]<=82) $hatu++;
                     if($b["spin"]>=111 && $b["spin"]<=116) $hatu++;
                     if($b["spin"]>=222 && $b["spin"]<=227) $hatu++;
-                }
-            }
+//                }
+            }*/
             $tujyo = round($tujyo);
 
             //■一般的な台 ----------------------
@@ -469,6 +490,7 @@ class dai extends Authenticatable
             "hall" => $floor->hall,
             "floor" => $floor->floor,
         ])->get();
+
 
         //機種情報
         $kisyu = kisyu::where("id", $floor->kisyu)->first()->toArray();
@@ -515,6 +537,7 @@ class dai extends Authenticatable
 
         foreach($floor as $f){
             $sit = floor::akiDai($f['floor']);
+            if($sit=='oyasumi') return 'oyasumi';
 
             //返り値
             $akiVG = [];
@@ -526,14 +549,42 @@ class dai extends Authenticatable
                 if(isset($f->daiList[$i])) $dai = $f->daiList[$i];
                 else $dai = new dai();
 
+/*
+                Log::info('----------------');
+                Log::info('usr_id '.$s['usr_id']);
+                Log::info('$dai->tyakuseki '.$dai->tyakuseki);
+                Log::info('$dai->kakurituHyouka '.$dai->kakurituHyouka);
+*/
                 //1台更新
                 if((in_array($s['usr_id'], $accountIdList))
-                    //|| ($dai->kakurituHyouka=='kakurituVeryGood')
-                ){
+                    //|| (!$s['usr_id'] && $dai->tyakuseki && $dai->kakurituHyouka=='kakurituVeryGood')
+                    || (!$s['usr_id'] && $dai->kakurituHyouka=='kakurituVeryGood')
+                    ){
+                    //新しい空席なら記録
+                    if(!$s['usr_id'] && $dai->tyakuseki){
+                        dai::find($dai->id)->update(['tyakuseki'=>0]);
+                    }
                     dai::daiOne($f, $dai);
+                    //初当たり確率最新
                     if($dai->hatu) $dai->kakuritu = round($dai->tujyo / $dai->hatu);
                     else $dai->kakuritu = "-";
+
+                    //初当たり評価最新
+                    $hatuNew = $dai->kakuritu;
+                    $kisyu = kisyu::where("id", $f['kisyu'])->first()->toArray();
+                    $dai->kakurituHyouka = "";
+                    if($hatuNew > $kisyu["kakurituBad"]) $dai->kakurituHyouka = "kakurituBad";
+                    if($hatuNew < $kisyu["kakurituGood"]) $dai->kakurituHyouka = "kakurituGood";
+                    if($hatuNew < $kisyu["kakurituVeryGood"]) $dai->kakurituHyouka = "kakurituVeryGood";
+                    if($dai->hatu == 0) $dai->kakurituHyouka = "";
+
+                    //出玉評価最新
+                    $dai->dedamaHyouka = "";
+                    if($dai->dedama < $kisyu["dedamaBad"]) $dai->dedamaHyouka = "dedamaBad";
+                    if($dai->dedama > $kisyu["dedamaGood"]) $dai->dedamaHyouka = "dedamaGood";
+                    if($dai->dedama > $kisyu["dedamaVeryGood"]) $dai->dedamaHyouka = "dedamaVeryGood";
                 }
+
 
                 //今打ってる台
                 if(in_array($s['usr_id'], $accountIdList)){
@@ -545,6 +596,12 @@ class dai extends Authenticatable
                     $dai->dollar_box = $s['dollar_box']; //持ちメダル
                     $myplay[]=$dai;
 
+                    //ピンチ登録
+                    if($dai->kakurituHyouka == "kakurituGood" || $dai->kakurituHyouka == "kakurituVeryGood"){
+                    }else{
+                        //$pinch="notGood";
+                    }
+
                 //VG
                 }elseif($dai->kakurituHyouka=='kakurituVeryGood'){
                     $to = $s['time_out']- time(); //タイムアウト
@@ -552,8 +609,10 @@ class dai extends Authenticatable
                     else $dai->time_out = round($to/60).'分'; //タイムアウト
                     $dai->dollar_box = $s['dollar_box']; //持ちメダル
 
-                    if($s['usr_id']) $dull[]=$dai;
-                    else $akiVG[]=$dai;
+                    if($s['usr_id']){ $dull[]=$dai;
+                    }else{
+                        $akiVG[]=$dai;
+                    }
 
                 /*//G
                 }elseif($dai->kakurituHyouka=='kakurituGood'){
@@ -569,6 +628,7 @@ class dai extends Authenticatable
             $f->myplay = $myplay;
 
         }
+        if($pinch)cinnamonPatrol::sendLine('pinch');
         return $pinch;
 
     }

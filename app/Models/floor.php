@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use Log;
 use Illuminate\Support\Facades\Http;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -51,7 +52,6 @@ class floor extends Authenticatable
         return $ima;
     }
 
-
     //最新のフロア情報取得
     public static function floorData(){
 
@@ -76,7 +76,6 @@ class floor extends Authenticatable
                 ->post(config('global.url_hall').$ima["hall_id"]);
             if(!isset($response['body']['floor'])) return false;  //お休み中
             $res = $response['body']['floor'];
-
 
             //DBインサート
             $total = count($res);
@@ -176,6 +175,8 @@ class floor extends Authenticatable
     // 空台情報
     public static function akiDai($floor)
     {
+//        Log::info('-------akiDai IN---------'.$floor);//★★★log★★★
+
         //現時刻のデータ
         $ima = floor::ima();
 
@@ -191,29 +192,44 @@ class floor extends Authenticatable
             'mst_floor_id' => $floor_id,
             'mst_hall_id' => $ima["hall_id"],
         ]);
+        if(!isset($result['body']['machine'])) return 'oyasumi';  //お休み中
         $res = $result['body']['machine']; //これやらないとデータ空
-        if(!$res) return false; //お休み中
+        if(!$res) return 'oyasumi'; //お休み中
+
+        //timeoutしたドゥル要請リセット
+        $dullList = cinnamonPatrol::where([
+            'template' => 3,
+            'go' => 1,
+            'floor' => $floor,
+        ])
+        ->get();
+        foreach($dullList as $d){
+            $key = $d->kisyuId - 1;
+            if($res[$key]['time_out'] && $res[$key]['time_out'] != $d->ren){
+                $d->update(['go'=>0]);
+                Log::info('akiDai ドゥル要請解除'.$floor.'-'.$d->kisyuId);//★★★log★★★
+//                Log::info($res[$d->kisyuId-1]['time_out']-time().' != '.$d->ren-time());//★★★log★★★
+            }
+        }
 
         //ボーナス中なら取る
         foreach($res as $key => $d){
             //タイムアウト時間計算
             $to = $d['time_out']-time();
-            $to = ceil($to/60);
             if($to < 1) $to = 0;
-            $d['time_out'] = $to;
+            $res[$key]['to'] = $to;
 
             if($d['bonus']){
                 //空台なら取っちゃえ
                 if(!$d['usr_id']){
-                    cinnamonPatrol::tore($floor_id, $d['mst_machine_id'], 'bunus');
+                    //cinnamonPatrol::tore($floor_id, $d['mst_machine_id'], 'bunus');
+                    $daiban = $d['mst_machine_id'];
+                    cinnamonPatrol::dullShite($floor, $daiban, $d['time_out'], 'bonus');
 
                 //タイムアウト10分以内ならドゥル要請
-                }elseif($d['time_out'] <10 && $d['time_out'] >1){
-                    $mes = 'bonus中-'.$floor.'F '.($key+1).'番台 '.$kisyu["name"];
-                    $cpMes = new cinnamonPatrol();
-                    $cpMes->target = $mes;
-                    $cpMes->template = 3;
-                    $cpMes->save();
+                }elseif($to <600 && $to >1){
+                    $daiban = $d['mst_machine_id'];
+                    cinnamonPatrol::dullShite($floor, $daiban, $d['time_out'], 'bonus');
                 }
             }
         }

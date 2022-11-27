@@ -6,10 +6,6 @@
 
 <div id="content" class="sitContent">
 
-@if(isset($pinch) && $pinch) <img src="{{url('/img/top2.jpg')}}" style="width:100%;">
-@else <img src="{{url('/img/top3.jpg')}}" style="width:100%;">
-@endif
-
 
 <br><br><br>
 <div class="cinnaLeft">
@@ -23,20 +19,33 @@
 <span class="goStop displayNone">{{$goStop}}</span>
 </div>
 <div class="cinnaRight">
-<p class="seikaTime">aaa</p><span class="cpError"></span>
+<p class="seikaTime">---</p><span class="cpError"></span>
 <div class="seika">
 @foreach($seika as $s)
 ・{{$s['target']}}<br>
 @endforeach
 </div>
-<br>
-<div class="dull">★★↓↓ドゥルお願い↓↓★★</div>
+{{--<?php var_dump(time());?>--}}
+<p>★★↓↓ドゥルお願い↓↓★★</p>
+<div class="dull">
+@foreach($dull as $d)
+・{{$d['mess']}}<br>
+@endforeach
+</div>
 </div>
 <br><br>
 <div class="cb"></div>
 <br><br>
+{{--
+@if($dull[0]['mess']!='nothing')
+<span id="" class="foxOnly displayNone">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Hx9iZZCrQeE/<video_id>?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</span>
+@endif
+--}}
+<br><br>
 <h2>■シナモンに指示を出す　<span class="tukaikata">使い方</span></h2>
-    {{ Form::open(['url' => url('/cpShiji'), 'class' => 'f1']) }}
+    {{ Form::open(['url' => url('/cpShiji'), 'class' => 'f1 cpStop']) }}
     {{ Form::hidden('folder','1')}}
     <table>
     <tr>
@@ -70,7 +79,7 @@
     <br><br>
 
 <h2>■着席boyを選ぶ</h2>
-    {{ Form::open(['url' => url('/boyGo'), 'class' => 'f2']) }}
+    {{ Form::open(['url' => url('/boyGo'), 'class' => 'f2 cpStop']) }}
     {{ Form::hidden('folder','1')}}
     @foreach($go as $g)
     <label class="check-box">
@@ -86,7 +95,7 @@
 
 
 <h2>■着席boy作成</h2>
-    {{ Form::open(['url' => url('/boyInsert'), 'class' => 'f3']) }}
+    {{ Form::open(['url' => url('/boyInsert'), 'class' => 'f3 cpStop']) }}
     {{ Form::hidden('folder','1')}}
     <p>　　SID（ブラウザのIR-SESSIONを入力）</p>
     @foreach($sid as $s)
@@ -95,7 +104,7 @@
     @endif
     @endforeach
     {{Form::submit('保存',['class'=>'not_view btn'])}}
-    　<a href="{{url('/allSidCheck')}}">チェック</a>
+    　<a class="cpStop" href="{{url('/allSidCheck')}}">チェック</a>
 
     {{ Form::close() }}
     <p>※他のブラウザでログインしちゃうとSIDが消えちゃうよ。</p>
