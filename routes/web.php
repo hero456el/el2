@@ -29,6 +29,7 @@ Route::any('/line/callback',    'App\Http\Controllers\LineApiController@postWebh
 // line メッセージ送信用
 Route::get('/line/message/send', 'App\Http\Controllers\LineApiController@sendMessage');
 
+Route::middleware(['auth:sanctum', 'verified'])->any('/ir', "App\Http\Controllers\TopController@ir");
 
 //Route::any('/', "App\Http\Controllers\TopController@now");
 Route::middleware(['auth:sanctum', 'verified'])->any('/', "App\Http\Controllers\TopController@now");

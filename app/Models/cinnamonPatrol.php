@@ -175,6 +175,13 @@ class cinnamonPatrol extends Authenticatable
             $cp = cinnamonPatrol::where([
                 'hall' => 999,
             ])->first();
+            if(!$cp){
+                $cp = new cinnamonPatrol();
+                $cp->hall = 999;
+                $cp->template = 1;
+                $cp->go = 0;
+                $cp->save();
+            }
             $cp->ren = 0;
             $cp->save();
 
@@ -767,6 +774,13 @@ class cinnamonPatrol extends Authenticatable
         $cp = cinnamonPatrol::where([
             'hall' => 999,
         ])->first();
+        if(!$cp){
+            $cp = new cinnamonPatrol();
+            $cp->hall = 999;
+            $cp->template = 1;
+            $cp->go = 0;
+            $cp->save();
+        }
         if((time()-$cp->ren)<600) return "さっき送った";
         $cp->ren = time();
         $cp->save();

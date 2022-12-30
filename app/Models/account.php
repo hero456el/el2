@@ -16,7 +16,6 @@ use App\Models\kisyu;
 use App\Models\hall;
 use App\Models\account;
 
-
 class account extends Authenticatable
 {
     protected $table = 'account';

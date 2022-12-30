@@ -15,6 +15,7 @@ use App\Models\kisyu;
 use App\Models\hall;
 use App\Models\account;
 use App\Models\cinnamonPatrol;
+use App\Models\ir;
 
 
 
@@ -58,15 +59,40 @@ class TopController extends Controller
         return view ('sit', ['test' => $test, 'test2' => "sss"]);
     }
 
+    public function ir(Request $request){
+        //削除
+        $delId = $request->input('del');
+        if($delId) ir::del($delId);
+
+        //チェック
+        if($request->input('check')) ir::APItest();
+        
+        //登録
+        $ir = $request->input('ir');
+        if($ir) ir::insert($ir);
+
+        //クッキー
+        // $cookie = $request->cookie();
+
+        $irList = ir::irList();
+        return view ('ir', [
+            'irList' => $irList,
+        ]);
+    }
+
     //■Top画面
     public function now(){
         Log::info("topへアクセス！");
+
+        // return view ('test', ['test1' => $a, 'test2' => "sss"]);
+
 
         // データベースの情報更新
         kisyu::dbInsert();
 
         // フロアデータ取得
         $floor = floor::floorData();
+        // return view ('test', ['test1' => "res", 'test2' => "sss"]);
         floor::floorDetail($floor); //詳細も付ける
 
         // ホールデータ取得
