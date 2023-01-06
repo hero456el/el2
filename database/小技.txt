@@ -42,3 +42,9 @@ php　使えないとき
 export PATH="$PATH:/usr/local/php/8.1/bin"
 
 
+■本番更新手順
+composer update
+更新ファイルアップロード(storageは省く)
+php artisan migrate
+php artisan view:clear
+php artisan config:cache
