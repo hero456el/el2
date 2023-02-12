@@ -11,7 +11,7 @@ if (uri.pathname == '/heroseye/public/') { topPage = 1; }
 
 //localhostかどうか
 //var apiUrl = "http://ec2-54-84-54-214.compute-1.amazonaws.com";
-var apiUrl = "https://allshare.thick.jp/el/el/public/";
+var apiUrl = "https://allshare.thick.jp/elkatsu/el/public/";
 if (uri.href.match(/localhost/)) { apiUrl = "http://localhost/"; }
 
 //intervalId
@@ -45,6 +45,7 @@ $("#aj").click(function() {
 window.addEventListener('load', function() {
     //ウブラブ
     if (firefox) {
+      // playAlert();
         $('.foxOnly').removeClass('displayNone');
         setTimeout(reloadTop, 1000 * 60 * 5, '');
     }
@@ -59,6 +60,11 @@ window.addEventListener('load', function() {
     }
 
 });
+
+function playAlert() {
+    $('.ffmove').removeClass('displayNone');
+
+}
 
 function reloadTop() {
     document.location.href = apiUrl;
@@ -278,4 +284,21 @@ $('.serchNow').click(function() {
     if (intervalId2) { clearInterval(intervalId2); }
     intervalId1 = "";
     intervalId2 = "";
+});
+
+
+
+const ytiframe= 'audio2';
+//iframeで表示しているwindowオブジェクトを取得
+const targetWindow = document.getElementById(ytiframe).contentWindow;
+
+//APIのコマンドを送信する関数
+const ag2ytControl = function(action,arg=null){
+  targetWindow.postMessage('{"event":"command", "func":"'+action+'", "args":'+arg+'}', '*');
+};
+
+//クリックイベントで動画を操作
+//再生
+document.getElementById('ytplay').addEventListener('click', function(event){
+  ag2ytControl('playVideo');
 });

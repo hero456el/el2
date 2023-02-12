@@ -63,6 +63,10 @@ Route::middleware(['auth:sanctum', 'verified'])->any('/syushi', "App\Http\Contro
 //ログ
 Route::middleware(['auth:sanctum', 'verified'])->any('/log', "App\Http\Controllers\TopController@log");
 
+//マニュアル
+Route::middleware(['auth:sanctum', 'verified'])->any('/manual', "App\Http\Controllers\TopController@manual");
+Route::middleware(['auth:sanctum', 'verified'])->any('/playtest', "App\Http\Controllers\TopController@playtest");
+
 
 //現在の台情報取得
 Route::any('/dataget', "App\Http\Controllers\TopController@dataget");

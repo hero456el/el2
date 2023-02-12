@@ -23,7 +23,7 @@
 @endif
 </span>
 
-<h1>ようこそ【Hero's Eye】へ!</h1>
+<h1>ようこそ【Hero's Eye】へ!!</h1>
 
 
 
@@ -106,16 +106,6 @@
 Twitter：{{$hall->twitter}}<br>
 </div>
 
-<div id="news">
-<p>News</p>
-<ul>
-<li>・VeryGood空き情報が最新になりました。</li>
-<li>・台データの最終更新時刻が表示されるようになりました。</li>
-<li>・変更点をNewsでお伝えするようになりました。</li>
-<li>・確率のVG、badなどの色がきちんと反映されるようになりました。</li>
-<li>・過去データが見やすくなりました。</li>
-</ul>
-</div>
 
 <br><br>
 
@@ -129,6 +119,7 @@ Twitter：{{$hall->twitter}}<br>
 @endforeach
 </div>
 </span>
+<p class=" displayNone">{{$dull[0]['to']}}</p>
 
 <br><br><br><br>
 <h1>ぽんちゃんプレイ中</h1>

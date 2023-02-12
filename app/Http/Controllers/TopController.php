@@ -106,7 +106,7 @@ class TopController extends Controller
 
         //着席情報
         $pinch = dai::sitData($floor);
-        if($pinch=='oyasumi') return view('oyasumi', []);
+        // if($pinch=='oyasumi') return view('oyasumi', []);
 //        return view ('test', ['test1' => $sit, 'test2' => "sss"]);
 
         //台データ取得
@@ -199,6 +199,16 @@ class TopController extends Controller
 
         return view ('test', ['test1' => $res, 'test2' => "sss"]);
     }
+
+    //■マニュアル
+    public function manual(){
+        return view ('manual');
+    }
+    //■プレイテスト
+    public function playtest(){
+        return view ('playtest');
+    }
+
 
 
 }

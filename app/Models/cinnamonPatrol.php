@@ -185,7 +185,7 @@ class cinnamonPatrol extends Authenticatable
             $cp->ren = 0;
             $cp->save();
 
-            return [["mess"=>"nothing"]];
+            return [["mess"=>"nothing", 'to'=>0]];
         }
 
         foreach($dull as $d){
@@ -218,7 +218,7 @@ class cinnamonPatrol extends Authenticatable
             $daiban = $d->kisyuId;
             $time = $d->ren;
 
-            $res[] = ['mess'=>$mess, 'floor'=>$floor, 'daiban'=>$daiban, 'time'=>$time];
+            $res[] = ['mess'=>$mess, 'floor'=>$floor, 'daiban'=>$daiban, 'time'=>$time, 'to'=>$to];
         }
 
         return $res;
