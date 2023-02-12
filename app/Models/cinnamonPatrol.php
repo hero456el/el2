@@ -185,7 +185,7 @@ class cinnamonPatrol extends Authenticatable
             $cp->ren = 0;
             $cp->save();
 
-            return [["mess"=>"nothing", 'to'=>0]];
+            return [["mess"=>"nothing", 'to'=>'no']];
         }
 
         foreach($dull as $d){

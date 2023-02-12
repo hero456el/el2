@@ -18,7 +18,8 @@
 <span id="pinch" style="display:none;">pinch</span>
 @endif
 @if($dull[0]['mess']!='nothing')
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Hx9iZZCrQeE/<video_id>?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe id="audio2" width="560" height="315" src="https://www.youtube.com/embed/Hx9iZZCrQeE/<video_id>?enablejsapi=1" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{--  <iframe width="560" height="315" src="https://www.youtube.com/embed/Hx9iZZCrQeE/<video_id>?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>--}}
 <span id="pinch" style="display:none;">pinch</span>
 @endif
 </span>
@@ -26,7 +27,7 @@
 <h1>ようこそ【Hero's Eye】へ!!</h1>
 
 
-
+{{--
 <div>
   <div><div style="
   overflow: auto;
@@ -93,10 +94,7 @@
     });
   </script>
 </div>
-
-
-
-<button id="aj">更新</button><span id="floorCount"></span><br>
+--}}
 
 <div style="display: inline-block;">
 最終更新：{{$lastUpdate}}<br>
@@ -119,64 +117,9 @@ Twitter：{{$hall->twitter}}<br>
 @endforeach
 </div>
 </span>
-<p class=" displayNone">{{$dull[0]['to']}}</p>
+<p class="zanTime displayNone">{{$dull[0]['to']}}</p>
 
-<br><br><br><br>
-<h1>ぽんちゃんプレイ中</h1>
-<?php $totalKati=0;?>
-<table>
-@foreach ($floor as $f)
-@if($f->myplay) @foreach ($f->myplay as $d)
-@if($d->EL=="EL50"||$d->EL=="EL51"||$d->EL=="EL52"||$d->EL=="EL53"||$d->EL=="EL54")
-<tr class="{{$d->kakurituHyouka}} {{$d->dedamaHyouka}}">
-<td>【{{$d->EL}}】</td>
-<td>{{$f->floor}}F</td>
-<td>{{$f["kisyuName"]}}</td>
-<td>{{$d->daiban}}番台</td>
-<td>({{$f["rate"].$f["slo"]}}{{($f["kankin"]/10)."%"}})</td>
-<td>1/<span class="kakuritu">{{$d->kakuritu}}</span> ({{$d->hatu}})</td>
-<td class="r">　<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
-<?php $kati=$d->dollar_box*$f["rate"]*($f["kankin"]/1000); $totalKati+=$kati; ?>
-<td class="r"> {{number_format($kati)}}円</td>
-<?php $to=""; if($d->time_out!="30分"){$to="not30";} ?>
-<td class="{{$to}}">{{$d->time_out}}</td>
-</tr>
-@endif
-@endforeach @endif
-@endforeach
-</table>
-<p class="kankin">　<span>{{number_format($totalKati)}}</span> 円換金！</p>
 <br><br>
-
-<h1>俺プレイ中</h1>
-<?php $totalKati=0;?>
-<table>
-@foreach ($floor as $f)
-@if($f->myplay) @foreach ($f->myplay as $d)
-@if($d->EL=="EL50"||$d->EL=="EL51"||$d->EL=="EL52"||$d->EL=="EL53"||$d->EL=="EL54")
-@else
-<tr class="{{$d->kakurituHyouka}} {{$d->dedamaHyouka}}">
-<td>【{{$d->EL}}】</td>
-<td>{{$f->floor}}F</td>
-<td>{{$f["kisyuName"]}}</td>
-<td>{{$d->daiban}}番台</td>
-<td>({{$f["rate"].$f["slo"]}}{{($f["kankin"]/10)."%"}})</td>
-<td>1/<span class="kakuritu">{{$d->kakuritu}}</span> ({{$d->hatu}})</td>
-<td class="r">　<span class="dedama">{{$d->dollar_box}}{{$f["mai"]}}</span></td>
-<?php $kati=$d->dollar_box*$f["rate"]*($f["kankin"]/1000); $totalKati+=$kati; ?>
-<td class="r"> {{number_format($kati)}}円</td>
-<?php $to=""; if($d->time_out!="30分"){$to="not30";} ?>
-<td class="{{$to}}">{{$d->time_out}}</td>
-</tr>
-@endif
-@endforeach @endif
-@endforeach
-</table>
-<p class="kankin">　<span>{{number_format($totalKati)}}</span> 円換金！</p>
-<br><br>
-
-
-
 
 
 

@@ -19,6 +19,8 @@ https://www.youtube.com/embed/Hx9iZZCrQeE/<video_id>?autoplay=1
 
 
 
+<p class="zanTime displayNone">80</p>
+
 
 <h1>topページ</h1>
 <?php

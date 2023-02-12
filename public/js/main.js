@@ -45,7 +45,7 @@ $("#aj").click(function() {
 window.addEventListener('load', function() {
     //ウブラブ
     if (firefox) {
-      // playAlert();
+      playAlert();
         $('.foxOnly').removeClass('displayNone');
         setTimeout(reloadTop, 1000 * 60 * 5, '');
     }
@@ -62,8 +62,16 @@ window.addEventListener('load', function() {
 });
 
 function playAlert() {
-    $('.ffmove').removeClass('displayNone');
-
+    var n = $('.zanTime').text();
+    if(n=="no" || n<-600 ) return false;
+    if(n<70){
+      ag2ytControl('playVideo');
+      return false;
+    } 
+    var interval = (n-60) * 1000; //1000で1秒
+    setTimeout(function(){
+        ag2ytControl('playVideo');
+    },interval);
 }
 
 function reloadTop() {
